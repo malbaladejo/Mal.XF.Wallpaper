@@ -13,6 +13,7 @@ namespace Mal.XF.Wallpaper.Droid
 
             container.RegisterType<IDownloadService, AndroidDownloadService>();
             container.RegisterType<IWallpaperService, AndroidWallpaperService>();
+            container.RegisterType<IFileService, AndroidFileService>();
         }
     }
 }

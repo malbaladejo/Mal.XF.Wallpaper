@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Mal.XF.Wallpaper.Models
 {
@@ -46,19 +45,5 @@ namespace Mal.XF.Wallpaper.Models
 
         [JsonProperty("wp")]
         public bool Wp { get; set; }
-    }
-
-    internal static class BingImageExtensions
-    {
-        public static string GetFullUrl(this BingImage image)
-        {
-            return $"https://www.bing.com{image.Url}";
-        }
-
-        public static string GetMobileFullUrl(this BingImage image)
-        {
-            var regex = new Regex("(.*_)([0-9]*x[0-9]*)(.jpg)");
-            return regex.Replace(image.GetFullUrl(), "${1}1080x1920$3");
-        }
     }
 }

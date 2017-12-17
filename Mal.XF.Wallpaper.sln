@@ -17,6 +17,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Mal.XF.Wallpaper\Mal.XF.Wallpaper\Mal.XF.Wallpaper.projitems*{137f4c6d-469d-4c43-8116-d8997577e24e}*SharedItemsImports = 13
 		Mal.XF.Wallpaper\Mal.XF.Wallpaper\Mal.XF.Wallpaper.projitems*{1fb81be0-5c7d-449d-b119-b63302402ad1}*SharedItemsImports = 4
+		Mal.XF.Wallpaper\Mal.XF.Wallpaper\Mal.XF.Wallpaper.projitems*{43c0dc70-3083-4996-ab68-617b8bfd6764}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

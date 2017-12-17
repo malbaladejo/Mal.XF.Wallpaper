@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
+using System.Linq;
 
 namespace Mal.XF.Wallpaper.Pages.Main
 {
@@ -51,11 +52,18 @@ namespace Mal.XF.Wallpaper.Pages.Main
             {
                 this.IsBusy = true;
                 this.Message = "Getting metadata...";
-                var bingImage = await this.bingWallpaperService.GetBinImageAsync();
-                this.Message = "Downloading image...";
-                var imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImage);
+                var bingImages = (await this.bingWallpaperService.GetBinImagesAsync(2)).ToList();
+                this.Message = "Clear images...";
+                await this.bingWallpaperService.ClearImagesAsync(bingImages);
+                this.Message = "Downloading image 1...";
+                var imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[0]);
                 this.Message = "Set image as wallpapper...";
-                this.bingWallpaperService.SetImageAsWallpaper(imagePath);
+                await this.bingWallpaperService.SetImageAsWallpaperAsync(imagePath);
+
+                this.Message = "Downloading image 2...";
+                imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[1]);
+                this.Message = "Set image as screen lock...";
+                await this.bingWallpaperService.SetImageAsScreenLockAsync(imagePath);
                 this.Message = "Done";
             }
             catch (Exception e)

@@ -1,7 +1,10 @@
-﻿namespace Mal.XF.Wallpaper.Services
+﻿using System.Threading.Tasks;
+
+namespace Mal.XF.Wallpaper.Services
 {
     internal interface IWallpaperService
     {
-        void SetImageAsWallpaper(string imagePath);
+        Task SetImageAsWallpaperAsync(string imagePath);
+        Task SetImageAsScreenLockAsync(string imagePath);
     }
 }
