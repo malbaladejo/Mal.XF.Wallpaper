@@ -1,4 +1,4 @@
-﻿using Mal.XF.Infra;
+﻿using Mal.XF.Infra.Android.PlatformInitializers;
 using Mal.XF.Wallpaper.Droid.Services;
 using Mal.XF.Wallpaper.Services;
 using Microsoft.Practices.Unity;
@@ -13,7 +13,6 @@ namespace Mal.XF.Wallpaper.Droid
 
             container.RegisterType<IDownloadService, AndroidDownloadService>();
             container.RegisterType<IWallpaperService, AndroidWallpaperService>();
-            container.RegisterType<IFileService, AndroidFileService>();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mal.XF.Infra.Extensions;
 using System.Linq;
+using Mal.XF.Infra.IO;
 
 namespace Mal.XF.Wallpaper.Services
 {

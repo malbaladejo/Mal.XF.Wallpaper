@@ -3,18 +3,19 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Linq;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace Mal.XF.Wallpaper.Pages.Main
 {
     internal class MainViewModel : BindableBase, INavigationAware
     {
-        private readonly INavigationService navigationService;
         private readonly IBingWallpaperService bingWallpaperService;
 
-        public MainViewModel(INavigationService navigationService, IBingWallpaperService bingWallpaperService)
+        public MainViewModel(IBingWallpaperService bingWallpaperService)
         {
-            this.navigationService = navigationService;
             this.bingWallpaperService = bingWallpaperService;
+            this.SetAsWallpaperCommand = new DelegateCommand<string>(this.SetAsWallpapper, this.CanSetAsWallpapper);
         }
 
         private bool isBusy;
@@ -75,6 +76,10 @@ namespace Mal.XF.Wallpaper.Pages.Main
                 this.IsBusy = false;
             }
         }
+
+        public ICommand SetAsWallpaperCommand { get; }
+        public ICommand SetAsScreenLockCommand { get; }
+        public ICommand SetAsWallpaperAndScreenLockCommand { get; }
 
     }
 }

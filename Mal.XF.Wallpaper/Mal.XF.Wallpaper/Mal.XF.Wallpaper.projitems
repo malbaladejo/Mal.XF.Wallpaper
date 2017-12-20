@@ -22,10 +22,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Main\MainToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Main\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Main\SetAsWallpaperCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\BingWallpaperService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IBingWallpaperService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDownloadService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IFileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IWallpaperService.cs" />
   </ItemGroup>
   <ItemGroup>

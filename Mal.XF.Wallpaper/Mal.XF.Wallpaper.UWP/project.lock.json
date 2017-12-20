@@ -24673,30 +24673,31 @@
     "UAP,Version=v10.0.10586": []
   },
   "packageFolders": {
-    "C:\\Users\\mike\\.nuget\\packages\\": {}
+    "C:\\Users\\albaladejo\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
+      "projectUniqueName": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
       "projectName": "Mal.XF.Wallpaper.UWP",
-      "projectPath": "C:\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
-      "projectJsonPath": "C:\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\project.json",
-      "packagesPath": "C:\\Users\\mike\\.nuget\\packages\\",
-      "outputPath": "C:\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\obj\\",
+      "projectPath": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
+      "projectJsonPath": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\project.json",
+      "packagesPath": "C:\\Users\\albaladejo\\.nuget\\packages\\",
+      "outputPath": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\obj\\",
       "projectStyle": "ProjectJson",
       "configFilePaths": [
-        "C:\\Users\\mike\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\albaladejo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://g3-nuget:8081/api/odata": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "uap10.0.10586": {
           "projectReferences": {
-            "C:\\dev\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj": {
-              "projectPath": "C:\\dev\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj"
+            "C:\\Personnel\\dev\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj": {
+              "projectPath": "C:\\Personnel\\dev\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj"
             }
           }
         }

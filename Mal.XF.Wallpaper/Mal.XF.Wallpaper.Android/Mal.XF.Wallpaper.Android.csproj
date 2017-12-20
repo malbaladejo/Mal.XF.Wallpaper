@@ -150,7 +150,6 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AndroidDownloadService.cs" />
-    <Compile Include="Services\AndroidFileService.cs" />
     <Compile Include="Services\AndroidWallpaperService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +169,10 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Mal.XF.Infra\Mal.XF.Infra.Android\Mal.XF.Infra.Android.csproj">
+      <Project>{3aa9571c-28e7-4b9a-8525-ef046b8c9a90}</Project>
+      <Name>Mal.XF.Infra.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Mal.XF.Infra\Mal.XF.Infra\Mal.XF.Infra.csproj">
       <Project>{0db882be-3d4b-42fc-a211-ce953979f41f}</Project>
       <Name>Mal.XF.Infra</Name>
