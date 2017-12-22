@@ -23,7 +23,9 @@ namespace Mal.XF.Wallpaper.Droid.Services
 
         public Task SetImageAsWallpaperAsync(string imagePath)
         {
-            return Task.Run(() => this.wallpaperManager.SetBitmap(GetBitmap(imagePath)));
+            var bmp = GetBitmap(imagePath);
+            return Task.Run(() =>
+                this.wallpaperManager.SetBitmap(bmp, new Rect(0, 0, bmp.Width, bmp.Height), false, WallpaperManagerFlags.System));
         }
 
         private static Bitmap GetBitmap(string imagePath)

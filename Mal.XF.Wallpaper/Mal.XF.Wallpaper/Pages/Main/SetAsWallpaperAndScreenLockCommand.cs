@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Mal.XF.Wallpaper.Services;
 using Prism.Commands;
 
 namespace Mal.XF.Wallpaper.Pages.Main
 {
-    internal class SetAsWallpaperCommand : DelegateCommandBase
+    internal class SetAsWallpaperAndScreenLockCommand : DelegateCommandBase
     {
         private readonly IBingWallpaperService bingWallpaperService;
         private readonly Action<bool, string> setIsBusy;
 
-        public SetAsWallpaperCommand(IBingWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
+        public SetAsWallpaperAndScreenLockCommand(IBingWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.setIsBusy = setIsBusy;
@@ -25,9 +24,10 @@ namespace Mal.XF.Wallpaper.Pages.Main
             try
             {
                 this.IsActive = false;
-                this.setIsBusy(true, "Set as wallpaper...");
+                this.setIsBusy(true, "Set as wallpaper & screen lock...");
                 this.RaiseCanExecuteChanged();
-                await this.bingWallpaperService.SetImageAsWallpaperAsync(filePath);
+                await Task.WhenAll(this.bingWallpaperService.SetImageAsWallpaperAsync(filePath),
+                    this.bingWallpaperService.SetImageAsScreenLockAsync(filePath));
             }
             finally
             {
