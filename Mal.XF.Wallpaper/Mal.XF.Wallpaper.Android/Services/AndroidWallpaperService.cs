@@ -8,27 +8,23 @@ namespace Mal.XF.Wallpaper.Droid.Services
     internal class AndroidWallpaperService : IWallpaperService
     {
         private readonly WallpaperManager wallpaperManager;
+
         public AndroidWallpaperService()
         {
             this.wallpaperManager = WallpaperManager.GetInstance(Application.Context);
         }
 
-        public Task SetImageAsScreenLockAsync(string imagePath)
+        public Task SetImageAsScreenLockAsync(string imagePath) =>
+            this.SetImageAsync(imagePath, WallpaperManagerFlags.Lock);
+
+        public Task SetImageAsWallpaperAsync(string imagePath) =>
+            this.SetImageAsync(imagePath, WallpaperManagerFlags.System);
+
+        private Task SetImageAsync(string imagePath, WallpaperManagerFlags which)
         {
-            var bmp = GetBitmap(imagePath);
-
+            var bmp = BitmapFactory.DecodeFile(imagePath);
             return Task.Run(() =>
-            this.wallpaperManager.SetBitmap(bmp, new Rect(0, 0, bmp.Width, bmp.Height), false, WallpaperManagerFlags.Lock));
+                this.wallpaperManager.SetBitmap(bmp, new Rect(0, 0, bmp.Width, bmp.Height), false, which));
         }
-
-        public Task SetImageAsWallpaperAsync(string imagePath)
-        {
-            var bmp = GetBitmap(imagePath);
-            return Task.Run(() =>
-                this.wallpaperManager.SetBitmap(bmp, new Rect(0, 0, bmp.Width, bmp.Height), false, WallpaperManagerFlags.System));
-        }
-
-        private static Bitmap GetBitmap(string imagePath)
-            => BitmapFactory.DecodeFile(imagePath);
     }
 }

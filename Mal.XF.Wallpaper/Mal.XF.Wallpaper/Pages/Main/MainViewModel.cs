@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Mal.XF.Infra.Navigation;
 using Mal.XF.Wallpaper.Models;
+using Mal.XF.Wallpaper.Pages.Configuration;
 using Prism.Commands;
 using Xamarin.Forms.Internals;
 
@@ -14,11 +16,13 @@ namespace Mal.XF.Wallpaper.Pages.Main
     internal class MainViewModel : BindableBase, INavigationAware
     {
         private readonly IBingWallpaperService bingWallpaperService;
+        private readonly INavigationService navigationService;
         private readonly IReadOnlyCollection<DelegateCommandBase> commands;
 
-        public MainViewModel(IBingWallpaperService bingWallpaperService)
+        public MainViewModel(IBingWallpaperService bingWallpaperService, INavigationService navigationService)
         {
             this.bingWallpaperService = bingWallpaperService;
+            this.navigationService = navigationService;
             this.setAsWallpaperCommand = new SetAsWallpaperCommand(bingWallpaperService, this.SetIsBusy);
             this.setAsScreenLockCommand = new SetAsScreenLockCommand(bingWallpaperService, this.SetIsBusy);
             this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(bingWallpaperService, this.SetIsBusy);
@@ -29,6 +33,13 @@ namespace Mal.XF.Wallpaper.Pages.Main
                 this.setAsScreenLockCommand,
                 this.setAsWallpaperAndScreenLockCommand
             };
+
+            this.ConfigurationCommand = new DelegateCommand(this.NavigateToConfiguration);
+        }
+
+        private void NavigateToConfiguration()
+        {
+            this.navigationService.NavigateByTokenAsync(new ConfigurationToken());
         }
 
         private void SetIsBusy(bool isBusy, string message)
@@ -78,6 +89,8 @@ namespace Mal.XF.Wallpaper.Pages.Main
 
         private readonly DelegateCommandBase setAsWallpaperAndScreenLockCommand;
         public ICommand SetAsWallpaperAndScreenLockCommand => setAsWallpaperAndScreenLockCommand;
+
+        public ICommand ConfigurationCommand { get; }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {

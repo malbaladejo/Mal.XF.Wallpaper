@@ -1,6 +1,7 @@
 ﻿using Mal.XF.Infra;
 using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Localisation;
+using Mal.XF.Wallpaper.Pages.Configuration;
 using Mal.XF.Wallpaper.Pages.Main;
 using Mal.XF.Wallpaper.Services;
 using Microsoft.Practices.Unity;
@@ -25,7 +26,6 @@ namespace Mal.XF.Wallpaper
 
             this.RegisterViews();
             this.RegisterServices();
-            this.Container.RegisterTypeForNavigation<MainPage>();
         }
 
         private void RegisterViews()
@@ -33,12 +33,14 @@ namespace Mal.XF.Wallpaper
             this.Container.RegisterTypeForNavigation<NavigationPage>();
 
             this.Container.RegisterViewForNavigation<MainPage, MainViewModel, MainToken>();
+            this.Container.RegisterViewForNavigation<ConfigurationPage, ConfigurationViewModel, ConfigurationToken>();
             //this.Container.RegisterViewForNavigation<AboutPage, AboutViewModel, AboutToken>();
         }
 
         private void RegisterServices()
         {
             this.Container.RegisterType<IBingWallpaperService, BingWallpaperService>();
+            this.Container.RegisterType<ISettingsService, SettingsService>();
         }
 
         internal void RegisterTranslationProvider(ITranslationProvider provider)

@@ -11,23 +11,27 @@
         <Grid IsVisible="{Binding IsBusy,
                                   Converter={x:Static infraConverters:InverseBoolConverter.Instance}}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Image Grid.Row="0"
+            <Button Text="Configuration"
+                    Command="{Binding ConfigurationCommand}" />
+            
+            <Image Grid.Row="1"
                    Margin="10,10,10,0"
                    Source="{Binding TodayImagePath,
                                     Converter={x:Static infraConverters:FilePathToImageSourceConverter.Instance}}"
                    Aspect="AspectFit" />
 
-            <Label Grid.Row="1"
+            <Label Grid.Row="2"
                    Margin="10"
                    FontSize="Micro"
                    Text="{Binding TodayImage.Copyright}"
                    HorizontalOptions="Center" />
 
-            <StackLayout Grid.Row="2"
+            <StackLayout Grid.Row="3"
                          Orientation="Horizontal"
                          HorizontalOptions="Center">
                 <Button Text="W"
