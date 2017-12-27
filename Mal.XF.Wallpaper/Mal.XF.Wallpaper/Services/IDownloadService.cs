@@ -5,6 +5,6 @@ namespace Mal.XF.Wallpaper.Services
 {
     internal interface IDownloadService
     {
-        Task<string> DownloadImageAsync(BingImage image);
+        Task<string> DownloadImageAsync(BingImage image, string imageDirectory);
     }
 }

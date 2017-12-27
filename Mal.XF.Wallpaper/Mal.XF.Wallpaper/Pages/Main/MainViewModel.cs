@@ -2,19 +2,39 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
+using Mal.XF.Wallpaper.Models;
+using Prism.Commands;
+using Xamarin.Forms.Internals;
 
 namespace Mal.XF.Wallpaper.Pages.Main
 {
     internal class MainViewModel : BindableBase, INavigationAware
     {
-        private readonly INavigationService navigationService;
         private readonly IBingWallpaperService bingWallpaperService;
+        private readonly IReadOnlyCollection<DelegateCommandBase> commands;
 
-        public MainViewModel(INavigationService navigationService, IBingWallpaperService bingWallpaperService)
+        public MainViewModel(IBingWallpaperService bingWallpaperService)
         {
-            this.navigationService = navigationService;
             this.bingWallpaperService = bingWallpaperService;
+            this.setAsWallpaperCommand = new SetAsWallpaperCommand(bingWallpaperService, this.SetIsBusy);
+            this.setAsScreenLockCommand = new SetAsScreenLockCommand(bingWallpaperService, this.SetIsBusy);
+            this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(bingWallpaperService, this.SetIsBusy);
+
+            this.commands = new List<DelegateCommandBase>
+            {
+                this.setAsWallpaperCommand,
+                this.setAsScreenLockCommand,
+                this.setAsWallpaperAndScreenLockCommand
+            };
+        }
+
+        private void SetIsBusy(bool isBusy, string message)
+        {
+            this.IsBusy = isBusy;
+            this.Message = message;
         }
 
         private bool isBusy;
@@ -30,6 +50,34 @@ namespace Mal.XF.Wallpaper.Pages.Main
             get { return message; }
             set { SetProperty(ref message, value); }
         }
+
+        private string todayImagePath;
+        public string TodayImagePath
+        {
+            get { return todayImagePath; }
+            set
+            {
+                if (SetProperty(ref todayImagePath, value))
+                    this.RefreshCommands();
+            }
+        }
+
+        private BingImage todayImage;
+
+        public BingImage TodayImage
+        {
+            get { return todayImage; }
+            set { SetProperty(ref todayImage, value); }
+        }
+
+        private readonly DelegateCommandBase setAsWallpaperCommand;
+        public ICommand SetAsWallpaperCommand => setAsWallpaperCommand;
+
+        private readonly DelegateCommandBase setAsScreenLockCommand;
+        public ICommand SetAsScreenLockCommand => setAsScreenLockCommand;
+
+        private readonly DelegateCommandBase setAsWallpaperAndScreenLockCommand;
+        public ICommand SetAsWallpaperAndScreenLockCommand => setAsWallpaperAndScreenLockCommand;
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
@@ -50,31 +98,33 @@ namespace Mal.XF.Wallpaper.Pages.Main
         {
             try
             {
-                this.IsBusy = true;
-                this.Message = "Getting metadata...";
+                this.SetIsBusy(true, "Getting metadata...");
                 var bingImages = (await this.bingWallpaperService.GetBinImagesAsync(2)).ToList();
+                this.TodayImage = bingImages[0];
                 this.Message = "Clear images...";
                 await this.bingWallpaperService.ClearImagesAsync(bingImages);
-                this.Message = "Downloading image 1...";
-                var imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[0]);
-                this.Message = "Set image as wallpapper...";
-                await this.bingWallpaperService.SetImageAsWallpaperAsync(imagePath);
+                this.SetIsBusy(true, "Downloading today image...");
+                this.TodayImagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[0]);
+                //this.Message = "Set image as wallpapper...";
+                //await this.bingWallpaperService.SetImageAsWallpaperAsync(imagePath);
 
-                this.Message = "Downloading image 2...";
-                imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[1]);
-                this.Message = "Set image as screen lock...";
-                await this.bingWallpaperService.SetImageAsScreenLockAsync(imagePath);
-                this.Message = "Done";
+                //this.Message = "Downloading image 2...";
+                //imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[1]);
+                //this.Message = "Set image as screen lock...";
+                //await this.bingWallpaperService.SetImageAsScreenLockAsync(imagePath);
+                //this.Message = "Done";
+
+                this.SetIsBusy(false, "");
             }
             catch (Exception e)
             {
                 this.Message = $"Error:{e.Message}";
             }
-            finally
-            {
-                this.IsBusy = false;
-            }
         }
 
+        private void RefreshCommands()
+        {
+            this.commands.ForEach(c => c.RaiseCanExecuteChanged());
+        }
     }
 }

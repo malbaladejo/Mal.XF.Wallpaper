@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mal.XF.Infra.Extensions;
 using System.Linq;
+using Mal.XF.Infra.IO;
 
 namespace Mal.XF.Wallpaper.Services
 {
@@ -13,7 +14,7 @@ namespace Mal.XF.Wallpaper.Services
         private const string bingUrl = "https://www.bing.com";
         private const string numberOfImagesParamName = "{nbImage}";
         private static readonly string HPImageArchivegUrl = bingUrl + $"/HPImageArchive.aspx?format=js&idx=0&n={numberOfImagesParamName}";
-
+        private const string ImageDirectoryPath = "imgDir";
 
         private readonly IDownloadService downloadService;
         private readonly IWallpaperService wallpaperService;
@@ -30,7 +31,7 @@ namespace Mal.XF.Wallpaper.Services
 
         public async Task ClearImagesAsync(IReadOnlyCollection<BingImage> images)
         {
-            var existingFiles = await this.fileService.GetFilesAsync();
+            var existingFiles = await this.fileService.GetFilesAsync(ImageDirectoryPath);
             var filesToRemove = existingFiles.Where(f => images.All(i => !f.EndsWith(i.GetFileName())));
 
             foreach (var file in filesToRemove)
@@ -38,7 +39,7 @@ namespace Mal.XF.Wallpaper.Services
         }
 
         public Task<string> DownloadImageAsync(BingImage image)
-            => this.downloadService.DownloadImageAsync(image);
+            => this.downloadService.DownloadImageAsync(image, ImageDirectoryPath);
 
         public async Task<IReadOnlyCollection<BingImage>> GetBinImagesAsync(int numberOfImages)
         {

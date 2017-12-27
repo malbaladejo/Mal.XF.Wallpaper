@@ -7,6 +7,49 @@
              x:Class="Mal.XF.Wallpaper.Pages.Main.MainPage"
              Title="Malpaper">
 
-    <Label Text="{Binding Message}" />
+    <Grid>
+        <Grid IsVisible="{Binding IsBusy,
+                                  Converter={x:Static infraConverters:InverseBoolConverter.Instance}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0"
+                   Margin="10,10,10,0"
+                   Source="{Binding TodayImagePath,
+                                    Converter={x:Static infraConverters:FilePathToImageSourceConverter.Instance}}"
+                   Aspect="AspectFit" />
 
+            <Label Grid.Row="1"
+                   Margin="10"
+                   FontSize="Micro"
+                   Text="{Binding TodayImage.Copyright}"
+                   HorizontalOptions="Center" />
+
+            <StackLayout Grid.Row="2"
+                         Orientation="Horizontal"
+                         HorizontalOptions="Center">
+                <Button Text="W"
+                        WidthRequest="70"
+                        Command="{Binding SetAsWallpaperCommand}"
+                        CommandParameter="{Binding TodayImagePath}" />
+                <Button Text="L"
+                        WidthRequest="70"
+                        Command="{Binding SetAsScreenLockCommand}"
+                        CommandParameter="{Binding TodayImagePath}" />
+                <Button Text="W+L"
+                        WidthRequest="70"
+                        Command="{Binding SetAsWallpaperAndScreenLockCommand}"
+                        CommandParameter="{Binding TodayImagePath}" />
+            </StackLayout>
+        </Grid>
+
+        <StackLayout VerticalOptions="Center"
+                     IsVisible="{Binding IsBusy}">
+            <ActivityIndicator IsRunning="True" />
+            <Label Text="{Binding Message}"
+                   HorizontalOptions="Center" />
+        </StackLayout>
+    </Grid>
 </ContentPage>

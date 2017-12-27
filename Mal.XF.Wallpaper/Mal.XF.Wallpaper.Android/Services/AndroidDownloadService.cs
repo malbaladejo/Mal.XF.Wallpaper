@@ -10,14 +10,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
 {
     internal class AndroidDownloadService : IDownloadService
     {
-        private readonly IFileService fileService;
-
-        public AndroidDownloadService(IFileService fileService)
-        {
-            this.fileService = fileService;
-        }
-
-        public async Task<string> DownloadImageAsync(BingImage image)
+        public async Task<string> DownloadImageAsync(BingImage image, string imageDirectory)
         {
             using (var webClient = new WebClient())
             {
@@ -25,7 +18,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
                 using (var stream = await webClient.OpenReadTaskAsync(imageUrl))
                 {
                     var cw = new ContextWrapper(Android.App.Application.Context);
-                    var directory = cw.GetDir(this.fileService.GetImageDirectoryPath(), FileCreationMode.Private);
+                    var directory = cw.GetDir(imageDirectory, FileCreationMode.Private);
                     var file = new Java.IO.File(directory, image.GetFileName());
 
                     if (!file.Exists())
