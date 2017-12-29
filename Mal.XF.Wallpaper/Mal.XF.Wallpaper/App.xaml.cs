@@ -1,12 +1,12 @@
 ﻿using Mal.XF.Infra;
 using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Localisation;
+using Mal.XF.Infra.Pages.Master;
 using Mal.XF.Wallpaper.Pages.Configuration;
 using Mal.XF.Wallpaper.Pages.Main;
 using Mal.XF.Wallpaper.Services;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
-using Xamarin.Forms;
 
 namespace Mal.XF.Wallpaper
 {
@@ -17,7 +17,7 @@ namespace Mal.XF.Wallpaper
         protected override void OnInitialized()
         {
             this.InitializeComponent();
-            this.NavigationService.NavigateAsync($"NavigationPage/{typeof(MainToken).FullName}");
+            this.NavigationService.NavigateAsync($"{nameof(MasterPage)}/NavigationPage");
         }
 
         protected override void RegisterTypes()
@@ -30,10 +30,8 @@ namespace Mal.XF.Wallpaper
 
         private void RegisterViews()
         {
-            this.Container.RegisterTypeForNavigation<NavigationPage>();
-
-            this.Container.RegisterViewForNavigation<MainPage, MainViewModel, MainToken>();
-            this.Container.RegisterViewForNavigation<ConfigurationPage, ConfigurationViewModel, ConfigurationToken>();
+            this.Container.RegisterViewForMasterDetailNavigation<MainPage, MainViewModel>(new MainDisplayableToken());
+            this.Container.RegisterViewForMasterDetailNavigation<ConfigurationPage, ConfigurationDisplayableToken>(new ConfigurationDisplayableToken());
             //this.Container.RegisterViewForNavigation<AboutPage, AboutViewModel, AboutToken>();
         }
 
