@@ -42,4 +42,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ScreenLockButton.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\WallPaperAndScreenLockButton.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\WallPaperButton.jpg" />
+  </ItemGroup>
 </Project>
