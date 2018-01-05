@@ -7,17 +7,21 @@ using Mal.XF.Wallpaper.Pages.Main;
 using Mal.XF.Wallpaper.Services;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using Xamarin.Forms;
 
 namespace Mal.XF.Wallpaper
 {
     public partial class App : ApplicationBase
     {
+        public NavigationPage NavigationPage { get; private set; }
+
         public App(IPlatformInitializer initializer = null) : base(initializer) { }
 
         protected override void OnInitialized()
         {
             this.InitializeComponent();
-            this.NavigationService.NavigateAsync($"{nameof(MasterPage)}/NavigationPage");
+            var rootPage = new MasterPage(new MainDisplayableToken());
+            this.MainPage = rootPage;
         }
 
         protected override void RegisterTypes()
