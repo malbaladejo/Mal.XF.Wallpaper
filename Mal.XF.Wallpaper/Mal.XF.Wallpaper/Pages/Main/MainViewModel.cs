@@ -33,8 +33,6 @@ namespace Mal.XF.Wallpaper.Pages.Main
                 this.setAsScreenLockCommand,
                 this.setAsWallpaperAndScreenLockCommand
             };
-
-            this.ConfigurationCommand = new DelegateCommand(this.NavigateToConfiguration);
         }
 
         private void NavigateToConfiguration()
@@ -89,8 +87,6 @@ namespace Mal.XF.Wallpaper.Pages.Main
 
         private readonly DelegateCommandBase setAsWallpaperAndScreenLockCommand;
         public ICommand SetAsWallpaperAndScreenLockCommand => setAsWallpaperAndScreenLockCommand;
-
-        public ICommand ConfigurationCommand { get; }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {

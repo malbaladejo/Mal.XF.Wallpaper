@@ -16,8 +16,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button Text="Configuration"
-                    Command="{Binding ConfigurationCommand}" />
             
             <Image Grid.Row="1"
                    Margin="10,10,10,0"

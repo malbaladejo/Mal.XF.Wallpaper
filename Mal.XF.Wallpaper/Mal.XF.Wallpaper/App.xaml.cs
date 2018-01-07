@@ -2,12 +2,14 @@
 using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Localisation;
 using Mal.XF.Infra.Pages.Master;
+using Mal.XF.Infra.Pages.MasterMenu;
 using Mal.XF.Wallpaper.Pages.Configuration;
 using Mal.XF.Wallpaper.Pages.Main;
 using Mal.XF.Wallpaper.Services;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Xamarin.Forms;
+using Mal.XF.Infra.Navigation;
 
 namespace Mal.XF.Wallpaper
 {
@@ -15,13 +17,24 @@ namespace Mal.XF.Wallpaper
     {
         public NavigationPage NavigationPage { get; private set; }
 
-        public App(IPlatformInitializer initializer = null) : base(initializer) { }
+        public App(IPlatformInitializer initializer = null) : base(initializer)
+        {
+        }
 
         protected override void OnInitialized()
         {
             this.InitializeComponent();
-            var rootPage = new MasterPage(new MainDisplayableToken());
+
+            // TODO a revoir
+            var menu = new MasterMenuPage();
+            var menuVm = new MasterMenuViewModel(this.NavigationService, this.Container.Resolve<IMasterDetailNavigationService>());
+            menu.BindingContext = menuVm;
+            var rootPage = new MasterPage(menu);
+            // TODO a revoir
+
             this.MainPage = rootPage;
+
+            menuVm.NavigateToFirst();
         }
 
         protected override void RegisterTypes()
@@ -36,7 +49,6 @@ namespace Mal.XF.Wallpaper
         {
             this.Container.RegisterViewForMasterDetailNavigation<MainPage, MainViewModel>(new MainDisplayableToken());
             this.Container.RegisterViewForMasterDetailNavigation<ConfigurationPage, ConfigurationDisplayableToken>(new ConfigurationDisplayableToken());
-            //this.Container.RegisterViewForNavigation<AboutPage, AboutViewModel, AboutToken>();
         }
 
         private void RegisterServices()
