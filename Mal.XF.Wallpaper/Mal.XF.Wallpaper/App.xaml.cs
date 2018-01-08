@@ -13,7 +13,7 @@ using Mal.XF.Infra.Navigation;
 
 namespace Mal.XF.Wallpaper
 {
-    public partial class App : ApplicationBase
+    public partial class App : MasterDetailApplicationBase
     {
         public NavigationPage NavigationPage { get; private set; }
 
@@ -24,17 +24,7 @@ namespace Mal.XF.Wallpaper
         protected override void OnInitialized()
         {
             this.InitializeComponent();
-
-            // TODO a revoir
-            var menu = new MasterMenuPage();
-            var menuVm = new MasterMenuViewModel(this.NavigationService, this.Container.Resolve<IMasterDetailNavigationService>());
-            menu.BindingContext = menuVm;
-            var rootPage = new MasterPage(menu);
-            // TODO a revoir
-
-            this.MainPage = rootPage;
-
-            menuVm.NavigateToFirst();
+            base.OnInitialized();
         }
 
         protected override void RegisterTypes()
