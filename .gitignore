@@ -44,3 +44,5 @@ bin/
 obj/
 packages/
 /.vs
+/*/*.user
+/*/*/*.user

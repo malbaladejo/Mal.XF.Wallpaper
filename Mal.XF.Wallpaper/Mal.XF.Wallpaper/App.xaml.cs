@@ -1,22 +1,30 @@
 ﻿using Mal.XF.Infra;
 using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Localisation;
+using Mal.XF.Infra.Pages.Master;
+using Mal.XF.Infra.Pages.MasterMenu;
+using Mal.XF.Wallpaper.Pages.Configuration;
 using Mal.XF.Wallpaper.Pages.Main;
 using Mal.XF.Wallpaper.Services;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Xamarin.Forms;
+using Mal.XF.Infra.Navigation;
 
 namespace Mal.XF.Wallpaper
 {
-    public partial class App : ApplicationBase
+    public partial class App : MasterDetailApplicationBase
     {
-        public App(IPlatformInitializer initializer = null) : base(initializer) { }
+        public NavigationPage NavigationPage { get; private set; }
+
+        public App(IPlatformInitializer initializer = null) : base(initializer)
+        {
+        }
 
         protected override void OnInitialized()
         {
             this.InitializeComponent();
-            this.NavigationService.NavigateAsync($"NavigationPage/{typeof(MainToken).FullName}");
+            base.OnInitialized();
         }
 
         protected override void RegisterTypes()
@@ -25,20 +33,18 @@ namespace Mal.XF.Wallpaper
 
             this.RegisterViews();
             this.RegisterServices();
-            this.Container.RegisterTypeForNavigation<MainPage>();
         }
 
         private void RegisterViews()
         {
-            this.Container.RegisterTypeForNavigation<NavigationPage>();
-
-            this.Container.RegisterViewForNavigation<MainPage, MainViewModel, MainToken>();
-            //this.Container.RegisterViewForNavigation<AboutPage, AboutViewModel, AboutToken>();
+            this.Container.RegisterViewForMasterDetailNavigation<MainPage, MainViewModel>(new MainDisplayableToken());
+            this.Container.RegisterViewForMasterDetailNavigation<ConfigurationPage, ConfigurationDisplayableToken>(new ConfigurationDisplayableToken());
         }
 
         private void RegisterServices()
         {
             this.Container.RegisterType<IBingWallpaperService, BingWallpaperService>();
+            this.Container.RegisterType<ISettingsService, SettingsService>();
         }
 
         internal void RegisterTranslationProvider(ITranslationProvider provider)
