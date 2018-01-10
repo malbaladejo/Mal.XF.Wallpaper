@@ -12,6 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Localisation\LocalTranslationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Localisation\TranslationKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BingImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BingImageExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BingImages.cs" />
@@ -62,6 +64,13 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Pages\Configuration\ConfigurationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Localisation\Resources.fr.resx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Localisation\Resources.resx">
+      <Generator>
+      </Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>
