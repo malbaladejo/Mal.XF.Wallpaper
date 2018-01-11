@@ -4,15 +4,20 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mal.XF.Wallpaper.Pages.Configuration.ConfigurationPage"
-             Title="Configuration">
+             xmlns:localisation="clr-namespace:Mal.XF.Wallpaper.Localisation"
+             xmlns:infraLocalisation="clr-namespace:Mal.XF.Infra.Localisation;assembly=Mal.XF.Infra"
+             Title="{Binding Source={x:Static localisation:TranslationKeys.Settings}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}">
     <StackLayout>
-        <Label Text="Wallpaper" />
+        <Label Text="{Binding Source={x:Static localisation:TranslationKeys.Wallpaper}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="None" />
+            <Label Text="{Binding Source={x:Static localisation:TranslationKeys.None}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
             <Switch IsToggled="{Binding WallpaperConfiguration.None}" Grid.Column="1" />
         </Grid>
         <Grid>
@@ -20,7 +25,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="Image of the day" />
+            <Label Text="{Binding Source={x:Static localisation:TranslationKeys.ImageOfTheDay}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
             <Switch IsToggled="{Binding WallpaperConfiguration.ImageOfTheDay}" Grid.Column="1" />
         </Grid>
         <Grid>
@@ -28,17 +34,20 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="Image of Yesterday" />
+            <Label Text="{Binding Source={x:Static localisation:TranslationKeys.ImageOfYesterday}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
             <Switch IsToggled="{Binding WallpaperConfiguration.ImageOfYesterday}" Grid.Column="1" />
         </Grid>
 
-        <Label Text="Screen lock" />
+        <Label Text="{Binding Source={x:Static localisation:TranslationKeys.ScreenLock}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="None" />
+            <Label Text="{Binding Source={x:Static localisation:TranslationKeys.None}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
             <Switch IsToggled="{Binding ScreenLockConfiguration.None}" Grid.Column="1" />
         </Grid>
         <Grid>
@@ -46,7 +55,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="Image of the day" />
+            <Label Text="{Binding Source={x:Static localisation:TranslationKeys.ImageOfTheDay}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
             <Switch IsToggled="{Binding ScreenLockConfiguration.ImageOfTheDay}" Grid.Column="1" />
         </Grid>
         <Grid>
@@ -54,7 +64,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="Image of Yesterday" />
+            <Label Text="{Binding Source={x:Static localisation:TranslationKeys.ImageOfYesterday}, 
+                             Converter={x:Static infraLocalisation:TranslationConverter.Instance}}" />
             <Switch IsToggled="{Binding ScreenLockConfiguration.ImageOfYesterday}" Grid.Column="1" />
         </Grid>
     </StackLayout>

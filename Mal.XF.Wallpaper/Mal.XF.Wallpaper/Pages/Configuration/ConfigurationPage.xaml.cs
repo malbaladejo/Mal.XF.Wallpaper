@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace Mal.XF.Wallpaper.Pages.Configuration
 {
@@ -6,7 +7,14 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
     {
         public ConfigurationPage()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

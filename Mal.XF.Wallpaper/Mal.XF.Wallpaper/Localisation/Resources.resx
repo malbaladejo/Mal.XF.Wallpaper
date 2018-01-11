@@ -120,7 +120,22 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="ImageOfTheDay" xml:space="preserve">
+    <value>Image of the day</value>
+  </data>
+  <data name="ImageOfYesterday" xml:space="preserve">
+    <value>Image of yesterday</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ScreenLock" xml:space="preserve">
+    <value>Screen lock</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Wallpaper</value>
   </data>
 </root>

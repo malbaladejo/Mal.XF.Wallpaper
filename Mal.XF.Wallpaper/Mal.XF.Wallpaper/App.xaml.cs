@@ -38,7 +38,7 @@ namespace Mal.XF.Wallpaper
         private void RegisterViews()
         {
             this.Container.RegisterViewForMasterDetailNavigation<MainPage, MainViewModel>(new MainDisplayableToken());
-            this.Container.RegisterViewForMasterDetailNavigation<ConfigurationPage, ConfigurationDisplayableToken>(new ConfigurationDisplayableToken());
+            this.Container.RegisterViewForMasterDetailNavigation<ConfigurationPage, ConfigurationViewModel>(new ConfigurationDisplayableToken());
         }
 
         private void RegisterServices()

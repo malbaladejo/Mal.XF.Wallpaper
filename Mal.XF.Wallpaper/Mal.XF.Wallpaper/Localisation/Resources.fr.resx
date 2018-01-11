@@ -120,7 +120,22 @@
   <data name="Home" xml:space="preserve">
     <value>Accueil</value>
   </data>
+  <data name="ImageOfTheDay" xml:space="preserve">
+    <value>Image du jour</value>
+  </data>
+  <data name="ImageOfYesterday" xml:space="preserve">
+    <value>Image d'hier</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="ScreenLock" xml:space="preserve">
+    <value>Écran de verrouillage</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Paramètres</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Écran d'accueil</value>
   </data>
 </root>
