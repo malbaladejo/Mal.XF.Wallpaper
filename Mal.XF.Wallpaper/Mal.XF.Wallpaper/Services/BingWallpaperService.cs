@@ -1,11 +1,11 @@
 ﻿using Mal.XF.Wallpaper.Models;
 using Newtonsoft.Json;
-using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mal.XF.Infra.Extensions;
 using System.Linq;
 using Mal.XF.Infra.IO;
+using Mal.XF.Infra.Net;
 
 namespace Mal.XF.Wallpaper.Services
 {
@@ -32,7 +32,7 @@ namespace Mal.XF.Wallpaper.Services
         public async Task ClearImagesAsync(IReadOnlyCollection<BingImage> images)
         {
             var existingFiles = await this.fileService.GetFilesAsync(ImageDirectoryPath);
-            var filesToRemove = existingFiles.Where(f => images.All(i => !f.EndsWith(i.GetFileName())));
+            var filesToRemove = existingFiles.Where(f => images.All(i => !f.EndsWith(this.downloadService.GetFileName(i))));
 
             foreach (var file in filesToRemove)
                 await this.fileService.RemoveFileAsync(file);
@@ -43,25 +43,18 @@ namespace Mal.XF.Wallpaper.Services
 
         public async Task<IReadOnlyCollection<BingImage>> GetBinImagesAsync(int numberOfImages)
         {
-            using (var webClient = new WebClient())
-            {
-                var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
-                var bingImages = JsonConvert.DeserializeObject<BingImages>(json);
+            var webClient = new WebClient();
+            var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
+            var bingImages = JsonConvert.DeserializeObject<BingImages>(json);
 
-                return bingImages.Images.ToReadOnlyCollection();
-            }
+            return bingImages.Images.ToReadOnlyCollection();
         }
 
         public async Task<BingImage> GetTodayBinImageAsync()
         {
-            using (var webClient = new WebClient())
-            {
-                var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, "1"));
-                var bingImages = JsonConvert.DeserializeObject<BingImages>(json);
-
-                var bingImage = bingImages.Images[0];
-                return bingImage;
-            }
+            var bingImages = await this.GetBinImagesAsync(2);
+            var bingImage = bingImages.First();
+            return bingImage;
         }
 
         public Task SetImageAsScreenLockAsync(string imagePath)

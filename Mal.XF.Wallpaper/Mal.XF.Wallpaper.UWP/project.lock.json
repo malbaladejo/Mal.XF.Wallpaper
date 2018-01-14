@@ -2467,6 +2467,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     },
     "UAP,Version=v10.0.10586/win10-arm": {
@@ -4990,6 +5002,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     },
     "UAP,Version=v10.0.10586/win10-arm-aot": {
@@ -7549,6 +7573,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     },
     "UAP,Version=v10.0.10586/win10-x64": {
@@ -10081,6 +10117,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     },
     "UAP,Version=v10.0.10586/win10-x64-aot": {
@@ -12649,6 +12697,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     },
     "UAP,Version=v10.0.10586/win10-x86": {
@@ -15181,6 +15241,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     },
     "UAP,Version=v10.0.10586/win10-x86-aot": {
@@ -17749,6 +17821,18 @@
       },
       "Mal.XF.Infra/1.0.0": {
         "type": "project"
+      },
+      "Mal.XF.Infra.UWP/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.10586",
+        "dependencies": {
+          "Mal.XF.Infra": "1.0.0",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.1",
+          "Prism.Core": "6.3.0",
+          "Prism.Forms": "6.3.0",
+          "Prism.Unity.Forms": "6.3.0",
+          "Xamarin.Forms": "2.4.0.280"
+        }
       }
     }
   },
@@ -24661,43 +24745,52 @@
       "type": "project",
       "path": "../../../Mal.XF.Infra/Mal.XF.Infra/Mal.XF.Infra.csproj",
       "msbuildProject": "../../../Mal.XF.Infra/Mal.XF.Infra/Mal.XF.Infra.csproj"
+    },
+    "Mal.XF.Infra.UWP/1.0.0": {
+      "type": "project",
+      "path": "../../../Mal.XF.Infra/Mal.XF.Infra.UWP/Mal.XF.Infra.UWP.csproj",
+      "msbuildProject": "../../../Mal.XF.Infra/Mal.XF.Infra.UWP/Mal.XF.Infra.UWP.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
       "Newtonsoft.Json >= 10.0.3",
+      "Prism.Core >= 6.3.0",
+      "Prism.Forms >= 6.3.0",
       "Prism.Unity.Forms >= 6.3.0",
       "Xamarin.Forms >= 2.4.0.280"
     ],
     "UAP,Version=v10.0.10586": []
   },
   "packageFolders": {
-    "C:\\Users\\albaladejo\\.nuget\\packages\\": {}
+    "C:\\Users\\mike\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
+      "projectUniqueName": "C:\\dev\\Mal.XF\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
       "projectName": "Mal.XF.Wallpaper.UWP",
-      "projectPath": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
-      "projectJsonPath": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\project.json",
-      "packagesPath": "C:\\Users\\albaladejo\\.nuget\\packages\\",
-      "outputPath": "C:\\Personnel\\dev\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\obj\\",
+      "projectPath": "C:\\dev\\Mal.XF\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\Mal.XF.Wallpaper.UWP.csproj",
+      "projectJsonPath": "C:\\dev\\Mal.XF\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\project.json",
+      "packagesPath": "C:\\Users\\mike\\.nuget\\packages\\",
+      "outputPath": "C:\\dev\\Mal.XF\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper\\Mal.XF.Wallpaper.UWP\\obj\\",
       "projectStyle": "ProjectJson",
       "configFilePaths": [
-        "C:\\Users\\albaladejo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mike\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://g3-nuget:8081/api/odata": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "uap10.0.10586": {
           "projectReferences": {
-            "C:\\Personnel\\dev\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj": {
-              "projectPath": "C:\\Personnel\\dev\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj"
+            "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj": {
+              "projectPath": "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj"
+            },
+            "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra.UWP\\Mal.XF.Infra.UWP.csproj": {
+              "projectPath": "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra.UWP\\Mal.XF.Infra.UWP.csproj"
             }
           }
         }
@@ -24706,6 +24799,8 @@
     "dependencies": {
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
       "Newtonsoft.Json": "10.0.3",
+      "Prism.Core": "6.3.0",
+      "Prism.Forms": "6.3.0",
       "Prism.Unity.Forms": "6.3.0",
       "Xamarin.Forms": "2.4.0.280"
     },
@@ -24732,5 +24827,23 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Passage à une version antérieure du package détecté : Microsoft.NETCore.UniversalWindowsPlatform de 6.0.1 à 5.2.2. Référencez le package directement à partir du projet pour sélectionner une version différente. \r\n Mal.XF.Wallpaper.UWP -> Mal.XF.Infra.UWP -> Microsoft.NETCore.UniversalWindowsPlatform (>= 6.0.1) \r\n Mal.XF.Wallpaper.UWP -> Microsoft.NETCore.UniversalWindowsPlatform (>= 5.2.2)",
+      "libraryId": "Microsoft.NETCore.UniversalWindowsPlatform",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10586",
+        "UAP,Version=v10.0.10586/win10-arm",
+        "UAP,Version=v10.0.10586/win10-arm-aot",
+        "UAP,Version=v10.0.10586/win10-x64",
+        "UAP,Version=v10.0.10586/win10-x64-aot",
+        "UAP,Version=v10.0.10586/win10-x86",
+        "UAP,Version=v10.0.10586/win10-x86-aot"
+      ]
+    }
+  ]
 }

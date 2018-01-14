@@ -15,7 +15,7 @@ namespace Mal.XF.Wallpaper.Droid
 
             container.RegisterType<IDownloadService, AndroidDownloadService>();
             container.RegisterType<IWallpaperService, AndroidWallpaperService>();
-            container.Resolve<ITranslationManager>().Register(new LocalTranslationProvider());
+            container.Resolve<ITranslationManager>().Register(new LocalTranslationProvider("Mal.XF.Wallpaper.Droid.Localisation.Resources", typeof(LocalTranslationProvider).Assembly));
         }
     }
 }

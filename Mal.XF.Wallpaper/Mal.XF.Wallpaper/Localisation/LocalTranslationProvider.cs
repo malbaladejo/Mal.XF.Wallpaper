@@ -8,7 +8,7 @@ namespace Mal.XF.Wallpaper.Localisation
 {
     internal class LocalTranslationProvider: LocalTranslationProviderBase
     {
-        public LocalTranslationProvider() : base("Mal.XF.Wallpaper.Droid.Localisation.Resources", typeof(LocalTranslationProvider).Assembly)
+        public LocalTranslationProvider(string resourcePath, Assembly assembly) : base(resourcePath, assembly)
         {
         }
 

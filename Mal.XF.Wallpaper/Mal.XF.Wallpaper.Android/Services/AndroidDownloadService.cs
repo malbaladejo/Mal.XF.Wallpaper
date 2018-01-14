@@ -19,7 +19,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
                 {
                     var cw = new ContextWrapper(Android.App.Application.Context);
                     var directory = cw.GetDir(imageDirectory, FileCreationMode.Private);
-                    var file = new Java.IO.File(directory, image.GetFileName());
+                    var file = new Java.IO.File(directory, this.GetFileName(image));
 
                     if (!file.Exists())
                     {
@@ -37,5 +37,9 @@ namespace Mal.XF.Wallpaper.Droid.Services
                 }
             }
         }
+
+
+
+        public string GetFileName(BingImage image) => image.GetMobileFileName();
     }
 }

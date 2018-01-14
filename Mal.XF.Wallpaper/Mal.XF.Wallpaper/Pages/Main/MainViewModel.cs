@@ -122,12 +122,15 @@ namespace Mal.XF.Wallpaper.Pages.Main
                 //this.Message = "Set image as screen lock...";
                 //await this.bingWallpaperService.SetImageAsScreenLockAsync(imagePath);
                 //this.Message = "Done";
-
-                this.SetIsBusy(false, "");
+                
             }
             catch (Exception e)
             {
                 this.Message = $"Error:{e.Message}";
+            }
+            finally
+            {
+                this.SetIsBusy(false, "");
             }
         }
 
