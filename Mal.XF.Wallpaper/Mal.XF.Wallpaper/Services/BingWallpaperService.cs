@@ -1,4 +1,5 @@
-﻿using Mal.XF.Wallpaper.Models;
+﻿using System;
+using Mal.XF.Wallpaper.Models;
 using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Tasks;
@@ -19,14 +20,17 @@ namespace Mal.XF.Wallpaper.Services
         private readonly IDownloadService downloadService;
         private readonly IWallpaperService wallpaperService;
         private readonly IFileService fileService;
+        private readonly ISettingsService settingsService;
 
         public BingWallpaperService(IDownloadService downloadService,
-            IWallpaperService wallpaperService,
-            IFileService fileService)
+                                    IWallpaperService wallpaperService,
+                                    IFileService fileService,
+                                    ISettingsService settingsService)
         {
             this.downloadService = downloadService;
             this.wallpaperService = wallpaperService;
             this.fileService = fileService;
+            this.settingsService = settingsService;
         }
 
         public async Task ClearImagesAsync(IReadOnlyCollection<BingImage> images)
@@ -43,12 +47,33 @@ namespace Mal.XF.Wallpaper.Services
 
         public async Task<IReadOnlyCollection<BingImage>> GetBinImagesAsync(int numberOfImages)
         {
+            var metadata = await this.GetMetadataAsync(numberOfImages);
+            return metadata.Images;
+        }
+
+        private async Task<BingImageMetadata> GetMetadataAsync(int numberOfImages)
+        {
+            var metadata = this.settingsService.GetMetadata();
+            if (metadata != null)
+            {
+                if (metadata.IsValid())
+                    return metadata;
+            }
+
             using (var webClient = new WebClient())
             {
                 var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
                 var bingImages = JsonConvert.DeserializeObject<BingImages>(json);
 
-                return bingImages.Images.ToReadOnlyCollection();
+                var newMetadata = new BingImageMetadata
+                {
+                    UpdateDate = DateTime.Now,
+                    Images = bingImages.Images.ToReadOnlyCollection()
+                };
+
+                await this.settingsService.SaveMetadataAsync(newMetadata);
+
+                return newMetadata;
             }
         }
 

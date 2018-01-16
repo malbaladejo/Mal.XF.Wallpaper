@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Localisation\TranslationKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BingImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BingImageExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BingImageMetadata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BingImages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\RefreshImageType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />

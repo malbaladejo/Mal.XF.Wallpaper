@@ -12,26 +12,25 @@ namespace Mal.XF.Wallpaper.Droid.Services
     {
         public async Task<string> DownloadImageAsync(BingImage image, string imageDirectory)
         {
+            var cw = new ContextWrapper(Android.App.Application.Context);
+            var directory = cw.GetDir(imageDirectory, FileCreationMode.Private);
+            var file = new Java.IO.File(directory, image.GetFileName());
+            if (file.Exists())
+                return file.AbsolutePath;
+
             using (var webClient = new WebClient())
             {
                 var imageUrl = image.GetMobileFullUrl();
                 using (var stream = await webClient.OpenReadTaskAsync(imageUrl))
                 {
-                    var cw = new ContextWrapper(Android.App.Application.Context);
-                    var directory = cw.GetDir(imageDirectory, FileCreationMode.Private);
-                    var file = new Java.IO.File(directory, image.GetFileName());
-
-                    if (!file.Exists())
+                    using (var ms = new MemoryStream())
                     {
-                        using (var ms = new MemoryStream())
-                        {
-                            stream.CopyTo(ms);
-                            var imgByteArray = ms.ToArray();
-                            var bm = BitmapFactory.DecodeByteArray(imgByteArray, 0, imgByteArray.Length);
+                        stream.CopyTo(ms);
+                        var imgByteArray = ms.ToArray();
+                        var bm = BitmapFactory.DecodeByteArray(imgByteArray, 0, imgByteArray.Length);
 
-                            using (var os = new FileStream(file.AbsolutePath, FileMode.Create))
-                                bm.Compress(Bitmap.CompressFormat.Png, 100, os);
-                        }
+                        using (var os = new FileStream(file.AbsolutePath, FileMode.Create))
+                            bm.Compress(Bitmap.CompressFormat.Png, 100, os);
                     }
                     return file.AbsolutePath;
                 }
