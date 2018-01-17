@@ -149,6 +149,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AndroidBackgroundUpdateService.cs" />
     <Compile Include="Services\AndroidDownloadService.cs" />
     <Compile Include="Services\AndroidWallpaperService.cs" />
   </ItemGroup>

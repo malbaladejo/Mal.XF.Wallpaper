@@ -12,5 +12,8 @@ namespace Mal.XF.Wallpaper.Models
 
         [JsonProperty("refreshScreenLock")]
         public RefreshImageType RefreshScreenLock { get; set; }
+
+        public bool IsUpdateRequired => this.RefreshWallpaper != RefreshImageType.None ||
+                                          this.RefreshScreenLock != RefreshImageType.None;
     }
 }
