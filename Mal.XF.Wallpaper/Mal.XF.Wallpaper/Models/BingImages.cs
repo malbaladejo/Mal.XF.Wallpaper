@@ -6,8 +6,5 @@ namespace Mal.XF.Wallpaper.Models
     {
         [JsonProperty("images")]
         public BingImage[] Images { get; set; }
-
-        [JsonProperty("tooltips")]
-        public Tooltips Tooltips { get; set; }
     }
 }

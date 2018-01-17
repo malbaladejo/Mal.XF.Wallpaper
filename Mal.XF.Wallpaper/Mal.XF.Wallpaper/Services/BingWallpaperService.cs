@@ -16,6 +16,7 @@ namespace Mal.XF.Wallpaper.Services
         private const string numberOfImagesParamName = "{nbImage}";
         private static readonly string HPImageArchivegUrl = bingUrl + $"/HPImageArchive.aspx?format=js&idx=0&n={numberOfImagesParamName}";
         private const string ImageDirectoryPath = "imgDir";
+        private const int numberOfImages = 2;
 
         private readonly IDownloadService downloadService;
         private readonly IWallpaperService wallpaperService;
@@ -33,25 +34,29 @@ namespace Mal.XF.Wallpaper.Services
             this.settingsService = settingsService;
         }
 
-        public async Task ClearImagesAsync(IReadOnlyCollection<BingImage> images)
-        {
-            var existingFiles = await this.fileService.GetFilesAsync(ImageDirectoryPath);
-            var filesToRemove = existingFiles.Where(f => images.All(i => !f.EndsWith(i.GetFileName())));
-
-            foreach (var file in filesToRemove)
-                await this.fileService.RemoveFileAsync(file);
-        }
-
         public Task<string> DownloadImageAsync(BingImage image)
             => this.downloadService.DownloadImageAsync(image, ImageDirectoryPath);
 
-        public async Task<IReadOnlyCollection<BingImage>> GetBinImagesAsync(int numberOfImages)
+        public async Task<IReadOnlyList<BingImage>> GetImagesAsync()
         {
-            var metadata = await this.GetMetadataAsync(numberOfImages);
+            var metadata = await this.GetMetadataAsync();
+            await this.ClearImagesAsync(metadata.Images);
             return metadata.Images;
         }
 
-        private async Task<BingImageMetadata> GetMetadataAsync(int numberOfImages)
+        public async Task<BingImage> GetTodayImageAsync()
+        {
+            var images = await this.GetImagesAsync();
+            return images[BingImage.TodayImage];
+        }
+
+        public Task SetImageAsScreenLockAsync(string imagePath)
+            => this.wallpaperService.SetImageAsScreenLockAsync(imagePath);
+
+        public Task SetImageAsWallpaperAsync(string imagePath)
+            => this.wallpaperService.SetImageAsWallpaperAsync(imagePath);
+
+        private async Task<BingImageMetadata> GetMetadataInCacheAsync()
         {
             var metadata = this.settingsService.GetMetadata();
             if (metadata != null)
@@ -60,39 +65,32 @@ namespace Mal.XF.Wallpaper.Services
                     return metadata;
             }
 
-            using (var webClient = new WebClient())
-            {
-                var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
-                var bingImages = JsonConvert.DeserializeObject<BingImages>(json);
-
-                var newMetadata = new BingImageMetadata
-                {
-                    UpdateDate = DateTime.Now,
-                    Images = bingImages.Images.ToReadOnlyCollection()
-                };
-
-                await this.settingsService.SaveMetadataAsync(newMetadata);
-
-                return newMetadata;
-            }
+            return await this.GetMetadataAsync();
         }
 
-        public async Task<BingImage> GetTodayBinImageAsync()
+        private async Task<BingImageMetadata> GetMetadataAsync()
+        {
+            var bingImages = await this.GetBingImagesAsync();
+           return BingImageMetadata.BuildFromBingImages(bingImages);
+        }
+
+        private async Task<BingImages> GetBingImagesAsync()
         {
             using (var webClient = new WebClient())
             {
-                var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, "1"));
-                var bingImages = JsonConvert.DeserializeObject<BingImages>(json);
+                var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
+                var  images = JsonConvert.DeserializeObject<BingImages>(json);
 
-                var bingImage = bingImages.Images[0];
-                return bingImage;
+                return images;
             }
         }
+        private async Task ClearImagesAsync(IReadOnlyCollection<BingImage> images)
+        {
+            var existingFiles = await this.fileService.GetFilesAsync(ImageDirectoryPath);
+            var filesToRemove = existingFiles.Where(f => images.All(i => !f.EndsWith(i.GetFileName())));
 
-        public Task SetImageAsScreenLockAsync(string imagePath)
-            => this.wallpaperService.SetImageAsScreenLockAsync(imagePath);
-
-        public Task SetImageAsWallpaperAsync(string imagePath)
-            => this.wallpaperService.SetImageAsWallpaperAsync(imagePath);
+            foreach (var file in filesToRemove)
+                await this.fileService.RemoveFileAsync(file);
+        }
     }
 }
