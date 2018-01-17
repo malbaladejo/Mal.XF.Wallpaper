@@ -8,9 +8,8 @@ namespace Mal.XF.Wallpaper.Services
 {
     internal interface IBingWallpaperService
     {
-        Task<BingImage> GetTodayBinImageAsync();
-        Task<IReadOnlyCollection<BingImage>> GetBinImagesAsync(int numberOfImages);
-        Task ClearImagesAsync(IReadOnlyCollection<BingImage> images);
+        Task<BingImage> GetTodayImageAsync();
+        Task<IReadOnlyList<BingImage>> GetImagesAsync();
 
         Task<string> DownloadImageAsync(BingImage image);
 

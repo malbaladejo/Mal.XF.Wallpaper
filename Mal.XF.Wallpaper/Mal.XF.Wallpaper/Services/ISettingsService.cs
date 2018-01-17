@@ -11,5 +11,9 @@ namespace Mal.XF.Wallpaper.Services
         Settings GetSettings();
 
         Task SaveSettingsAsync(Settings settings);
+
+        BingImageMetadata GetMetadata();
+
+        Task SaveMetadataAsync(BingImageMetadata metadata);
     }
 }
