@@ -14,6 +14,6 @@ namespace Mal.XF.Wallpaper.Services
 
         BingImageMetadata GetMetadata();
 
-        Task SaveMetadataAsync(BingImageMetadata date);
+        Task SaveMetadataAsync(BingImageMetadata metadata);
     }
 }
