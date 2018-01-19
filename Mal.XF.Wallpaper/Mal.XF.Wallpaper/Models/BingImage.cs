@@ -4,9 +4,6 @@ namespace Mal.XF.Wallpaper.Models
 {
     internal class BingImage
     {
-        public const int TodayImage = 0;
-        public const int YesterdayImage = 1;
-
         [JsonProperty("bot")]
         public long Bot { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Mal.XF.Wallpaper.Models;
+﻿using System;
+using Mal.XF.Wallpaper.Models;
 using Prism.Mvvm;
 
 namespace Mal.XF.Wallpaper.Pages.Configuration
@@ -13,7 +14,7 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
             this.PropertyChanged += ConfigurationItem_PropertyChanged;
         }
 
-        public void LoadSettingsAsync()
+        public void LoadSettings()
         {
             var type = this.settingsService.GetSettings();
             this.None = type == RefreshImageType.None;
@@ -21,10 +22,13 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
             this.ImageOfYesterday = type == RefreshImageType.ImageOfYesterday;
         }
 
-        private void SaveSettingsAsync()
+        private async void SaveSettingsAsync()
         {
-            this.settingsService.SaveSettingsAsync(this.GetSettings());
+            await this.settingsService.SaveSettingsAsync(this.GetSettings());
+            this.SettingsChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        public event EventHandler SettingsChanged;
 
         private RefreshImageType GetSettings()
         {

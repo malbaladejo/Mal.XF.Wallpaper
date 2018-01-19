@@ -35,11 +35,6 @@ namespace Mal.XF.Wallpaper.Pages.Main
             };
         }
 
-        private void NavigateToConfiguration()
-        {
-            this.navigationService.NavigateByTokenAsync(new ConfigurationToken());
-        }
-
         private void SetIsBusy(bool isBusy, string message)
         {
             this.IsBusy = isBusy;

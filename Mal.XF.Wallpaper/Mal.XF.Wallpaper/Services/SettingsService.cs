@@ -31,7 +31,7 @@ namespace Mal.XF.Wallpaper.Services
 
         public BingImageMetadata GetMetadata()
         {
-            var metadata = GetProperty<BingImageMetadata>(SettingsKey);
+            var metadata = GetProperty<BingImageMetadata>(MetadataKey);
 
             if (metadata != null)
                 return metadata;

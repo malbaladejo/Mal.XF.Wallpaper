@@ -47,7 +47,7 @@ namespace Mal.XF.Wallpaper.Services
         public async Task<BingImage> GetTodayImageAsync()
         {
             var images = await this.GetImagesAsync();
-            return images[BingImage.TodayImage];
+            return images[(int)RefreshImageType.ImageOfTheDay];
         }
 
         public Task SetImageAsScreenLockAsync(string imagePath)
@@ -56,29 +56,53 @@ namespace Mal.XF.Wallpaper.Services
         public Task SetImageAsWallpaperAsync(string imagePath)
             => this.wallpaperService.SetImageAsWallpaperAsync(imagePath);
 
-        private async Task<BingImageMetadata> GetMetadataInCacheAsync()
+        public async Task UpdateImagesIfNeededAsync()
         {
-            var metadata = this.settingsService.GetMetadata();
-            if (metadata != null)
-            {
-                if (metadata.IsValid())
-                    return metadata;
-            }
+            var settings = settingsService.GetSettings();
+            if (!settings.IsUpdateRequired)
+                return;
 
-            return await this.GetMetadataAsync();
+            if (settingsService.GetMetadata().IsValid())
+                return;
+
+            var images = await this.GetImagesAsync();
+
+            await Task.WhenAll(this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfTheDay),
+                               this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfYesterday));
+        }
+
+        private async Task UpdateImageAsync(Settings settings, IReadOnlyList<BingImage> images, RefreshImageType type)
+        {
+            if (settings.RefreshWallpaper != type &&
+                settings.RefreshScreenLock != type)
+                return;
+
+            var filePath = await this.DownloadImageAsync(images[(int)type]);
+
+            if (settings.RefreshWallpaper == type)
+                await this.SetImageAsWallpaperAsync(filePath);
+
+            if (settings.RefreshScreenLock == type)
+                await this.SetImageAsScreenLockAsync(filePath);
         }
 
         private async Task<BingImageMetadata> GetMetadataAsync()
         {
+            var metadata = settingsService.GetMetadata();
+            if (metadata.IsSmallValid())
+                return metadata;
+
             var bingImages = await this.GetBingImagesAsync();
-            return BingImageMetadata.BuildFromBingImages(bingImages);
+            metadata = BingImageMetadata.BuildFromBingImages(bingImages);
+            await this.settingsService.SaveMetadataAsync(metadata);
+            return metadata;
         }
 
         private async Task<BingImages> GetBingImagesAsync()
         {
             var webClient = new WebClient();
 
-            var json = await webClient.DownloadStringTaskAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
+            var json = await webClient.DownloadStringAsync(HPImageArchivegUrl.Replace(numberOfImagesParamName, numberOfImages.ToString()));
             var images = JsonConvert.DeserializeObject<BingImages>(json);
 
             return images;

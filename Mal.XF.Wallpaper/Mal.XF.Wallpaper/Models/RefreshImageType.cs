@@ -6,8 +6,8 @@ namespace Mal.XF.Wallpaper.Models
 {
     internal enum RefreshImageType
     {
-        None = 0,
-        ImageOfTheDay = 1,
-        ImageOfYesterday = 2
+        None = -1,
+        ImageOfTheDay = 0,
+        ImageOfYesterday = 1
     }
 }

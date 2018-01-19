@@ -14,8 +14,7 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
             this.settingsService = settingsService;
             this.settings = settings;
         }
-
-
+        
         public RefreshImageType GetSettings() => this.settings.RefreshWallpaper;
 
         public Task SaveSettingsAsync(RefreshImageType type)

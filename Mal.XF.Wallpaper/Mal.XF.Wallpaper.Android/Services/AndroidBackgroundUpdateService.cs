@@ -1,39 +1,25 @@
-﻿
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
+using Mal.XF.Wallpaper.Services;
 
 namespace Mal.XF.Wallpaper.Droid.Services
 {
-    internal class AndroidBackgroundUpdateService
+    internal class AndroidBackgroundUpdateService : BackgroundUpdateServiceBase
     {
-        private readonly AlarmManager alarmManager;
-        private PendingIntent updateIntent;
+        private readonly AlarmManagerBroadcastReceiver alarmManagerBroadcastReceiver;
 
-        public AndroidBackgroundUpdateService()
+        public AndroidBackgroundUpdateService(ISettingsService settingsService) : base(settingsService)
         {
-            this.alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
+            this.alarmManagerBroadcastReceiver = new AlarmManagerBroadcastReceiver();
         }
 
-        public void Start()
+        protected override void StartService()
         {
-            this.alarmManager.SetInexactRepeating(AlarmType.Rtc, 1, AlarmManager.IntervalHalfDay, this.updateIntent);
+            this.alarmManagerBroadcastReceiver.SetAlarm(Application.Context);
         }
 
-        public void Stop()
+        public override void Stop()
         {
-            this.alarmManager.Cancel(this.updateIntent);
-        }
-    }
-
-    internal class BackgroundUpdateServiceBootReceiver : BroadcastReceiver
-    {
-        public override void OnReceive(Context context, Intent intent)
-        {
-            if (intent.Action.Equals("android.intent.action.BOOT_COMPLETED"))
-            {
-                // Set the alarm here.
-            }
+            this.alarmManagerBroadcastReceiver.CancelAlarm(Application.Context);
         }
     }
 }

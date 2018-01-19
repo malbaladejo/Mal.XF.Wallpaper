@@ -15,5 +15,7 @@ namespace Mal.XF.Wallpaper.Services
 
         Task SetImageAsWallpaperAsync(string imagePath);
         Task SetImageAsScreenLockAsync(string imagePath);
+
+        Task UpdateImagesIfNeededAsync();
     }
 }
