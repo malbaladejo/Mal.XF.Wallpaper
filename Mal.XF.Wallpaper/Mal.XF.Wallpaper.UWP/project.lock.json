@@ -24786,11 +24786,11 @@
       "frameworks": {
         "uap10.0.10586": {
           "projectReferences": {
-            "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj": {
-              "projectPath": "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj"
-            },
             "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra.UWP\\Mal.XF.Infra.UWP.csproj": {
               "projectPath": "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra.UWP\\Mal.XF.Infra.UWP.csproj"
+            },
+            "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj": {
+              "projectPath": "C:\\dev\\Mal.XF\\Mal.XF.Infra\\Mal.XF.Infra\\Mal.XF.Infra.csproj"
             }
           }
         }

@@ -108,12 +108,14 @@ namespace Mal.XF.Wallpaper.Pages.Main
             try
             {
                 this.SetIsBusy(true, "Getting metadata...");
-                var bingImages = (await this.bingWallpaperService.GetBinImagesAsync(2)).ToList();
-                this.TodayImage = bingImages[0];
-                this.Message = "Clear images...";
-                await this.bingWallpaperService.ClearImagesAsync(bingImages);
+                this.TodayImage = await this.bingWallpaperService.GetTodayImageAsync();
+
                 this.SetIsBusy(true, "Downloading today image...");
-                this.TodayImagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[0]);
+                this.TodayImagePath = await this.bingWallpaperService.DownloadImageAsync(this.TodayImage);
+
+                //this.SetIsBusy(true, "Downloading yesterday image...");
+                //await this.bingWallpaperService.DownloadImageAsync(bingImages[1]);
+
                 //this.Message = "Set image as wallpapper...";
                 //await this.bingWallpaperService.SetImageAsWallpaperAsync(imagePath);
 
