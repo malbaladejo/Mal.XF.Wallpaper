@@ -44,6 +44,17 @@ namespace Mal.XF.Wallpaper.Services
             return metadata.Images;
         }
 
+        private async Task<IReadOnlyList<BingImage>> GetImagesFromCacheAsync()
+        {
+            var metadata = settingsService.GetMetadata();
+            IReadOnlyList<BingImage> images;
+            if (!metadata.IsValid())
+                metadata = await this.GetMetadataAsync();
+
+            await this.ClearImagesAsync(metadata.Images);
+            return metadata.Images;
+        }
+
         public async Task<BingImage> GetTodayImageAsync()
         {
             var images = await this.GetImagesAsync();
@@ -62,10 +73,7 @@ namespace Mal.XF.Wallpaper.Services
             if (!settings.IsUpdateRequired)
                 return;
 
-            if (settingsService.GetMetadata().IsValid())
-                return;
-
-            var images = await this.GetImagesAsync();
+            var images = await this.GetImagesFromCacheAsync();
 
             await Task.WhenAll(this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfTheDay),
                                this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfYesterday));
