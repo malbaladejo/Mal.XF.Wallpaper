@@ -1,0 +1,8 @@
+1. Test de la présence de connexion WiFi dans le BackgroundService
+2. Récupérer la bonne taille d'image en fonction de la taille de l'écran
+3. Utilisation de AnwsomeFont
+4. Layout / Margin a revoir, surout sur UWP.
+5. Afficher l'image précédente pendant le téléchargement de la nouvelle
+6. SplashScreen
+7. App Icon
+8. Améliorer la navigation sur MasterDetailPage, prise en compte du bouton back.

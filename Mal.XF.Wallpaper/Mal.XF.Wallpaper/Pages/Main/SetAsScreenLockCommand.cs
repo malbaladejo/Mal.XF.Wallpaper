@@ -6,10 +6,10 @@ namespace Mal.XF.Wallpaper.Pages.Main
 {
     internal class SetAsScreenLockCommand : DelegateCommandBase
     {
-        private readonly IBingWallpaperService bingWallpaperService;
+        private readonly IWallpaperService bingWallpaperService;
         private readonly Action<bool, string> setIsBusy;
 
-        public SetAsScreenLockCommand(IBingWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
+        public SetAsScreenLockCommand(IWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.setIsBusy = setIsBusy;

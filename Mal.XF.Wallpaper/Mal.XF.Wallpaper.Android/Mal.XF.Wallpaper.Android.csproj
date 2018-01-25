@@ -154,8 +154,7 @@
     <Compile Include="Services\AndroidDownloadService.cs" />
     <Compile Include="Services\AndroidWallpaperService.cs" />
     <Compile Include="Services\BackgroundUpdateServiceBootReceiver.cs" />
-    <Compile Include="Services\BackgroundUpdateServiceFactory.cs" />
-    <Compile Include="Services\BingWallpaperServiceFactory.cs" />
+    <Compile Include="Services\AndroidBackgroundServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

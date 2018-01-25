@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace Mal.XF.Wallpaper.Services
 {
-    internal interface IBackgroundUpdateService
+    internal interface IWallpaperBackgroundService
     {
-        void Start();
-        void Stop();
-        void StartIfNeeded();
+        Task UpdateImagesAsync();
     }
 }

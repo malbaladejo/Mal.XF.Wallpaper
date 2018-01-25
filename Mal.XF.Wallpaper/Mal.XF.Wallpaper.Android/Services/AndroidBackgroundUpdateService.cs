@@ -7,7 +7,8 @@ namespace Mal.XF.Wallpaper.Droid.Services
     {
         private readonly AlarmManagerBroadcastReceiver alarmManagerBroadcastReceiver;
 
-        public AndroidBackgroundUpdateService(ISettingsService settingsService) : base(settingsService)
+        public AndroidBackgroundUpdateService(ILocalStorageService localStorageService)
+            : base(localStorageService)
         {
             this.alarmManagerBroadcastReceiver = new AlarmManagerBroadcastReceiver();
         }

@@ -47,9 +47,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IBackgroundUpdateService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IBingWallpaperService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDownloadService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\ISettingsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ILocalStorageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IWallpaperService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IWallpaperBackgroundService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\LocalStorageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\WallpaperBackgroundService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">

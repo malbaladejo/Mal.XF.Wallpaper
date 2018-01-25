@@ -12,19 +12,19 @@ namespace Mal.XF.Wallpaper.Droid.Services
     {
         private readonly AlarmManager alarmManager;
         private readonly PendingIntent pendingIntent;
-        private readonly IBingWallpaperService bingWallpaperService;
+        private readonly IWallpaperBackgroundService backgroundUpdateService;
 
         public AlarmManagerBroadcastReceiver()
         {
             var currentIntent = new Intent(Application.Context, typeof(AlarmManagerBroadcastReceiver));
             this.alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
             this.pendingIntent = PendingIntent.GetBroadcast(Application.Context, 0, currentIntent, 0);
-            this.bingWallpaperService = BingWallpaperServiceFactory.Create();
+            this.backgroundUpdateService = AndroidBackgroundServiceFactory.CreateIBackgroundUpdateService2();
         }
 
         public override void OnReceive(Context context, Intent intent)
         {
-            this.bingWallpaperService.UpdateImagesIfNeededAsync();
+            this.backgroundUpdateService.UpdateImagesAsync();
         }
 
         public void SetAlarm(Context context)
@@ -41,7 +41,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
         {
             var calendar = Calendar.GetInstance(TimeZone.Default);
             calendar.TimeInMillis = JavaSystem.CurrentTimeMillis();
-            calendar.Set(CalendarField.HourOfDay, 8);
+            calendar.Set(CalendarField.HourOfDay, 9);
             return calendar.TimeInMillis;
         }
     }

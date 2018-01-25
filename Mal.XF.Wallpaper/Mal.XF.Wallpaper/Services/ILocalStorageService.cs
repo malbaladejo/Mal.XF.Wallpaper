@@ -6,7 +6,7 @@ using Mal.XF.Wallpaper.Models;
 
 namespace Mal.XF.Wallpaper.Services
 {
-    internal interface ISettingsService
+    internal interface ILocalStorageService
     {
         Settings GetSettings();
 

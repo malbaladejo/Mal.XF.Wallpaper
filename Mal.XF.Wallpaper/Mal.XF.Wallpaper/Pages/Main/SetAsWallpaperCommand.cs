@@ -8,10 +8,10 @@ namespace Mal.XF.Wallpaper.Pages.Main
 {
     internal class SetAsWallpaperCommand : DelegateCommandBase
     {
-        private readonly IBingWallpaperService bingWallpaperService;
+        private readonly IWallpaperService bingWallpaperService;
         private readonly Action<bool, string> setIsBusy;
 
-        public SetAsWallpaperCommand(IBingWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
+        public SetAsWallpaperCommand(IWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.setIsBusy = setIsBusy;

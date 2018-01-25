@@ -1,12 +1,16 @@
-﻿namespace Mal.XF.Wallpaper.Services
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Mal.XF.Wallpaper.Models;
+
+namespace Mal.XF.Wallpaper.Services
 {
     internal abstract class BackgroundUpdateServiceBase : IBackgroundUpdateService
     {
-        private readonly ISettingsService settingsService;
+        private readonly ILocalStorageService localStorageService;
 
-        public BackgroundUpdateServiceBase(ISettingsService settingsService)
+        public BackgroundUpdateServiceBase(ILocalStorageService localStorageService)
         {
-            this.settingsService = settingsService;
+            this.localStorageService = localStorageService;
         }
 
         public void Start()
@@ -21,7 +25,7 @@
 
         public void StartIfNeeded()
         {
-            var settings = this.settingsService.GetSettings();
+            var settings = this.localStorageService.GetSettings();
             if (!settings.IsUpdateRequired)
                 return;
 

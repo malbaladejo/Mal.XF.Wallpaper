@@ -6,12 +6,12 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
 {
     internal class ScreenLockSettingsService : IImageSettingsService
     {
-        private readonly ISettingsService settingsService;
+        private readonly ILocalStorageService localStorageService;
         private readonly Settings settings;
 
-        public ScreenLockSettingsService(ISettingsService settingsService, Settings settings)
+        public ScreenLockSettingsService(ILocalStorageService localStorageService, Settings settings)
         {
-            this.settingsService = settingsService;
+            this.localStorageService = localStorageService;
             this.settings = settings;
         }
 
@@ -20,7 +20,7 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
         public Task SaveSettingsAsync(RefreshImageType type)
         {
             this.settings.RefreshScreenLock = type;
-            return this.settingsService.SaveSettingsAsync(this.settings);
+            return this.localStorageService.SaveSettingsAsync(this.settings);
         }
     }
 }

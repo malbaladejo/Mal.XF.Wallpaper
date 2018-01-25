@@ -9,17 +9,17 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
 {
     internal class ConfigurationViewModel : BindableBase, INavigationAware
     {
-        private readonly ISettingsService settingsService;
+        private readonly ILocalStorageService localStorageService;
         private readonly IBackgroundUpdateService backgroundUpdateService;
         private bool isUpdateRequired;
 
-        public ConfigurationViewModel(ISettingsService settingsService, IBackgroundUpdateService backgroundUpdateService)
+        public ConfigurationViewModel(ILocalStorageService localStorageService, IBackgroundUpdateService backgroundUpdateService)
         {
-            this.settingsService = settingsService;
+            this.localStorageService = localStorageService;
             this.backgroundUpdateService = backgroundUpdateService;
-            var settings = settingsService.GetSettings();
-            this.WallpaperConfiguration = new ConfigurationItem(new WallpaperSettingsService(settingsService, settings));
-            this.ScreenLockConfiguration = new ConfigurationItem(new ScreenLockSettingsService(settingsService, settings));
+            var settings = localStorageService.GetSettings();
+            this.WallpaperConfiguration = new ConfigurationItem(new WallpaperSettingsService(localStorageService, settings));
+            this.ScreenLockConfiguration = new ConfigurationItem(new ScreenLockSettingsService(localStorageService, settings));
 
             this.WallpaperConfiguration.SettingsChanged += this.SettingsChanged;
             this.ScreenLockConfiguration.SettingsChanged += this.SettingsChanged;
@@ -27,10 +27,10 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
 
         private void SettingsChanged(object sender, EventArgs e)
         {
-            if (this.isUpdateRequired == this.settingsService.GetSettings().IsUpdateRequired)
+            if (this.isUpdateRequired == this.localStorageService.GetSettings().IsUpdateRequired)
                 return;
 
-            this.isUpdateRequired = this.settingsService.GetSettings().IsUpdateRequired;
+            this.isUpdateRequired = this.localStorageService.GetSettings().IsUpdateRequired;
 
             if (isUpdateRequired)
                 this.backgroundUpdateService.Start();
@@ -50,7 +50,7 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
             this.WallpaperConfiguration.LoadSettings();
             this.ScreenLockConfiguration.LoadSettings();
 
-            this.isUpdateRequired = this.settingsService.GetSettings().IsUpdateRequired;
+            this.isUpdateRequired = this.localStorageService.GetSettings().IsUpdateRequired;
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

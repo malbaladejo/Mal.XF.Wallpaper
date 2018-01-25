@@ -1,14 +1,11 @@
-﻿using Mal.XF.Wallpaper.Services;
+﻿using Mal.XF.Wallpaper.Models;
+using Mal.XF.Wallpaper.Services;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
-using Mal.XF.Infra.Navigation;
-using Mal.XF.Wallpaper.Models;
-using Mal.XF.Wallpaper.Pages.Configuration;
-using Prism.Commands;
 using Xamarin.Forms.Internals;
 
 namespace Mal.XF.Wallpaper.Pages.Main
@@ -16,16 +13,14 @@ namespace Mal.XF.Wallpaper.Pages.Main
     internal class MainViewModel : BindableBase, INavigationAware
     {
         private readonly IBingWallpaperService bingWallpaperService;
-        private readonly INavigationService navigationService;
         private readonly IReadOnlyCollection<DelegateCommandBase> commands;
 
-        public MainViewModel(IBingWallpaperService bingWallpaperService, INavigationService navigationService)
+        public MainViewModel(IBingWallpaperService bingWallpaperService, IWallpaperService wallpaperService)
         {
             this.bingWallpaperService = bingWallpaperService;
-            this.navigationService = navigationService;
-            this.setAsWallpaperCommand = new SetAsWallpaperCommand(bingWallpaperService, this.SetIsBusy);
-            this.setAsScreenLockCommand = new SetAsScreenLockCommand(bingWallpaperService, this.SetIsBusy);
-            this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(bingWallpaperService, this.SetIsBusy);
+            this.setAsWallpaperCommand = new SetAsWallpaperCommand(wallpaperService, this.SetIsBusy);
+            this.setAsScreenLockCommand = new SetAsScreenLockCommand(wallpaperService, this.SetIsBusy);
+            this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(wallpaperService, this.SetIsBusy);
 
             this.commands = new List<DelegateCommandBase>
             {
@@ -103,23 +98,13 @@ namespace Mal.XF.Wallpaper.Pages.Main
             try
             {
                 this.SetIsBusy(true, "Getting metadata...");
-                this.TodayImage = await this.bingWallpaperService.GetTodayImageAsync();
+                // TODO utiliser ILocalStorageService pour ne pas charger les metadata depuis le service a chaque fois.
+                var images = await this.bingWallpaperService.GetImagesAsync();
+
+                this.TodayImage = images[(int)RefreshImageType.ImageOfTheDay];
 
                 this.SetIsBusy(true, "Downloading today image...");
                 this.TodayImagePath = await this.bingWallpaperService.DownloadImageAsync(this.TodayImage);
-
-                //this.SetIsBusy(true, "Downloading yesterday image...");
-                //await this.bingWallpaperService.DownloadImageAsync(bingImages[1]);
-
-                //this.Message = "Set image as wallpapper...";
-                //await this.bingWallpaperService.SetImageAsWallpaperAsync(imagePath);
-
-                //this.Message = "Downloading image 2...";
-                //imagePath = await this.bingWallpaperService.DownloadImageAsync(bingImages[1]);
-                //this.Message = "Set image as screen lock...";
-                //await this.bingWallpaperService.SetImageAsScreenLockAsync(imagePath);
-                //this.Message = "Done";
-                
             }
             catch (Exception e)
             {

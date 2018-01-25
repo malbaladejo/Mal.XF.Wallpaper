@@ -6,12 +6,12 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
 {
     internal class WallpaperSettingsService : IImageSettingsService
     {
-        private readonly ISettingsService settingsService;
+        private readonly ILocalStorageService localStorageService;
         private readonly Settings settings;
 
-        public WallpaperSettingsService(ISettingsService settingsService, Settings settings)
+        public WallpaperSettingsService(ILocalStorageService localStorageService, Settings settings)
         {
-            this.settingsService = settingsService;
+            this.localStorageService = localStorageService;
             this.settings = settings;
         }
         
@@ -20,7 +20,7 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
         public Task SaveSettingsAsync(RefreshImageType type)
         {
             this.settings.RefreshWallpaper = type;
-            return this.settingsService.SaveSettingsAsync(this.settings);
+            return this.localStorageService.SaveSettingsAsync(this.settings);
         }
     }
 }

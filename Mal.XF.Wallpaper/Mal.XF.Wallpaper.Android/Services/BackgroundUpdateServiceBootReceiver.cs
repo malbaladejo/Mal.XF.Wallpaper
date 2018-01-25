@@ -9,7 +9,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
 
         public BackgroundUpdateServiceBootReceiver()
         {
-            this.backgroundUpdateService = BackgroundUpdateServiceFactory.Create();
+            this.backgroundUpdateService = AndroidBackgroundServiceFactory.CreateIBackgroundUpdateService();
         }
 
         public override void OnReceive(Context context, Intent intent)

@@ -6,7 +6,7 @@ using System;
 
 namespace Mal.XF.Wallpaper.Services
 {
-    internal class SettingsService : ISettingsService
+    internal class LocalStorageService : ILocalStorageService
     {
         private const string SettingsKey = "SettingsKey";
         private const string MetadataKey = "MetadataKey";
