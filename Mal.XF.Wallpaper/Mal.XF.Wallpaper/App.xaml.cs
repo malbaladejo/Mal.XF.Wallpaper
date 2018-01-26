@@ -46,6 +46,7 @@ namespace Mal.XF.Wallpaper
             this.Container.RegisterType<IBingWallpaperService, BingWallpaperService>();
             this.Container.RegisterType<ILocalStorageService, LocalStorageService>();
             this.Container.RegisterType<IWallpaperBackgroundService, WallpaperBackgroundService>();
+            this.Container.RegisterType<IBingWallpaperRepository, BingWallpaperRepository>();
         }
 
         internal void RegisterTranslationProvider(ITranslationProvider provider)

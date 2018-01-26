@@ -6,7 +6,7 @@ using Mal.XF.Wallpaper.Models;
 
 namespace Mal.XF.Wallpaper.Services
 {
-   internal class WallpaperBackgroundService: IWallpaperBackgroundService
+    internal class WallpaperBackgroundService : IWallpaperBackgroundService
     {
         private readonly ILocalStorageService localStorageService;
         private readonly IBingWallpaperService bingWallpaperService;
@@ -28,7 +28,7 @@ namespace Mal.XF.Wallpaper.Services
             var images = await this.bingWallpaperService.GetImagesAsync();
 
             await Task.WhenAll(this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfTheDay),
-                this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfYesterday));
+                               this.UpdateImageAsync(settings, images, RefreshImageType.ImageOfYesterday));
         }
 
         private async Task UpdateImageAsync(Settings settings, IReadOnlyList<BingImage> images, RefreshImageType type)

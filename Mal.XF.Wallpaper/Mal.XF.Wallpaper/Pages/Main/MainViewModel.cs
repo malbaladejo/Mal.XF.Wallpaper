@@ -15,7 +15,7 @@ namespace Mal.XF.Wallpaper.Pages.Main
         private readonly IBingWallpaperService bingWallpaperService;
         private readonly IReadOnlyCollection<DelegateCommandBase> commands;
 
-        public MainViewModel(IBingWallpaperService bingWallpaperService, IWallpaperService wallpaperService)
+        public MainViewModel(IBingWallpaperRepository bingWallpaperService, IWallpaperService wallpaperService)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.setAsWallpaperCommand = new SetAsWallpaperCommand(wallpaperService, this.SetIsBusy);
@@ -98,7 +98,6 @@ namespace Mal.XF.Wallpaper.Pages.Main
             try
             {
                 this.SetIsBusy(true, "Getting metadata...");
-                // TODO utiliser ILocalStorageService pour ne pas charger les metadata depuis le service a chaque fois.
                 var images = await this.bingWallpaperService.GetImagesAsync();
 
                 this.TodayImage = images[(int)RefreshImageType.ImageOfTheDay];
