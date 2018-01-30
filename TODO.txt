@@ -1,4 +1,4 @@
-1. Test de la présence de connexion WiFi dans le BackgroundService
+﻿1. Test de la présence de connexion WiFi dans le BackgroundService
 2. Récupérer la bonne taille d'image en fonction de la taille de l'écran
 3. Utilisation de AnwsomeFont
 4. Layout / Margin a revoir, surout sur UWP.
@@ -6,3 +6,4 @@
 6. SplashScreen
 7. App Icon
 8. Améliorer la navigation sur MasterDetailPage, prise en compte du bouton back.
+9. Log
