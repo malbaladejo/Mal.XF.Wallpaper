@@ -54,6 +54,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IWallpaperBackgroundService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalStorageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\WallpaperBackgroundService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\DefaultState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsNewImagesAvailableState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\ScheduleBackgroundUpdateServiceTo8AmState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\ScheduleBackgroundUpdateServiceToNextHourState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\SetLastUpdateState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\StateBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\StateFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\StateMachine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsUpdateRequiredBaseOnLastUpdateState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\UpdateImagesState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsUpdateRequiredBaseOnSettingsState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsWifiEnabledState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsWifiRequiredState.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">

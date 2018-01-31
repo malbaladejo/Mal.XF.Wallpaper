@@ -7,7 +7,8 @@ namespace Mal.XF.Wallpaper.Services
 {
     internal interface IBackgroundUpdateService
     {
-        void Start();
+        void StartNext8Am();
+        void StartNextHour();
         void Stop();
         void StartIfNeeded();
     }

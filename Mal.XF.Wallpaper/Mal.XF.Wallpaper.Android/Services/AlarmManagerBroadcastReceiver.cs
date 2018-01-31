@@ -1,9 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Icu.Util;
-using Java.Lang;
 using Mal.XF.Wallpaper.Services;
-using TimeZone = Android.Icu.Util.TimeZone;
+using System;
 
 namespace Mal.XF.Wallpaper.Droid.Services
 {
@@ -29,7 +27,12 @@ namespace Mal.XF.Wallpaper.Droid.Services
 
         public void SetAlarm(Context context)
         {
-            this.alarmManager.SetInexactRepeating(AlarmType.Rtc, this.GetTriggerAtMillis(), AlarmManager.IntervalHalfDay, this.pendingIntent);
+            this.alarmManager.SetExact(AlarmType.Rtc, GetNext8AmTicks(), this.pendingIntent);
+        }
+
+        public void SetAlarmNextHour(Context context)
+        {
+            this.alarmManager.SetExact(AlarmType.Rtc, GetNextHourTicks(), this.pendingIntent);
         }
 
         public void CancelAlarm(Context context)
@@ -37,12 +40,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
             this.alarmManager.Cancel(this.pendingIntent);
         }
 
-        private long GetTriggerAtMillis()
-        {
-            var calendar = Calendar.GetInstance(TimeZone.Default);
-            calendar.TimeInMillis = JavaSystem.CurrentTimeMillis();
-            calendar.Set(CalendarField.HourOfDay, 9);
-            return calendar.TimeInMillis;
-        }
+        private static long GetNext8AmTicks() => DateTime.Now.Date.AddDays(1).Date.AddHours(8).Ticks;
+        private static long GetNextHourTicks() => DateTime.Now.AddHours(1).Ticks;
     }
 }

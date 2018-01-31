@@ -13,14 +13,10 @@ namespace Mal.XF.Wallpaper.Droid.Services
             this.alarmManagerBroadcastReceiver = new AlarmManagerBroadcastReceiver();
         }
 
-        protected override void StartService()
-        {
-            this.alarmManagerBroadcastReceiver.SetAlarm(Application.Context);
-        }
+        protected override void StartServiceNext8Am() => this.alarmManagerBroadcastReceiver.SetAlarm(Application.Context);
 
-        public override void Stop()
-        {
-            this.alarmManagerBroadcastReceiver.CancelAlarm(Application.Context);
-        }
+        protected override void StartServiceNextHour() => this.alarmManagerBroadcastReceiver.SetAlarmNextHour(Application.Context);
+
+        public override void Stop() => this.alarmManagerBroadcastReceiver.CancelAlarm(Application.Context);
     }
 }

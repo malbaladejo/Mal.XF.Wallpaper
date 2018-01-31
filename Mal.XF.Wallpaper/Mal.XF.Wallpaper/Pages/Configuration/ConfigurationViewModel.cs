@@ -33,7 +33,7 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
             this.isUpdateRequired = this.localStorageService.GetSettings().IsUpdateRequired;
 
             if (isUpdateRequired)
-                this.backgroundUpdateService.Start();
+                this.backgroundUpdateService.StartNext8Am();
             else
                 this.backgroundUpdateService.Stop();
         }

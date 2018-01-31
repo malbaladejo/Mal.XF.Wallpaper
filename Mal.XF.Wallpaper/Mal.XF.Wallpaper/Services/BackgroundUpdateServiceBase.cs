@@ -13,13 +13,20 @@ namespace Mal.XF.Wallpaper.Services
             this.localStorageService = localStorageService;
         }
 
-        public void Start()
+        public void StartNext8Am()
         {
             this.Stop();
-            this.StartService();
+            this.StartServiceNext8Am();
         }
 
-        protected abstract void StartService();
+        public void StartNextHour()
+        {
+            this.Stop();
+            this.StartServiceNextHour();
+        }
+
+        protected abstract void StartServiceNext8Am();
+        protected abstract void StartServiceNextHour();
 
         public abstract void Stop();
 
@@ -29,7 +36,7 @@ namespace Mal.XF.Wallpaper.Services
             if (!settings.IsUpdateRequired)
                 return;
 
-            this.Start();
+            this.StartNext8Am();
         }
     }
 }
