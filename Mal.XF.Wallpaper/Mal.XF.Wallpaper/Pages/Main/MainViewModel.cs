@@ -6,6 +6,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Mal.XF.Infra.Log;
 using Xamarin.Forms.Internals;
 
 namespace Mal.XF.Wallpaper.Pages.Main
@@ -13,11 +14,13 @@ namespace Mal.XF.Wallpaper.Pages.Main
     internal class MainViewModel : BindableBase, INavigationAware
     {
         private readonly IBingWallpaperService bingWallpaperService;
+        private readonly ILogger logger;
         private readonly IReadOnlyCollection<DelegateCommandBase> commands;
 
-        public MainViewModel(IBingWallpaperRepository bingWallpaperService, IWallpaperService wallpaperService)
+        public MainViewModel(IBingWallpaperRepository bingWallpaperService, IWallpaperService wallpaperService, ILogger logger)
         {
             this.bingWallpaperService = bingWallpaperService;
+            this.logger = logger;
             this.setAsWallpaperCommand = new SetAsWallpaperCommand(wallpaperService, this.SetIsBusy);
             this.setAsScreenLockCommand = new SetAsScreenLockCommand(wallpaperService, this.SetIsBusy);
             this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(wallpaperService, this.SetIsBusy);
@@ -80,11 +83,12 @@ namespace Mal.XF.Wallpaper.Pages.Main
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-
+            this.logger.Info($"{nameof(MainViewModel)}.{nameof(INavigationAware.OnNavigatedFrom)}");
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
+            this.logger.Info($"{nameof(MainViewModel)}.{nameof(INavigationAware.OnNavigatedTo)}");
             this.Load();
         }
 

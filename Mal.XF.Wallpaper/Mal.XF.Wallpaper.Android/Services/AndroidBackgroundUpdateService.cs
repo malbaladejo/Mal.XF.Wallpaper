@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
 
 namespace Mal.XF.Wallpaper.Droid.Services
@@ -7,8 +8,8 @@ namespace Mal.XF.Wallpaper.Droid.Services
     {
         private readonly AlarmManagerBroadcastReceiver alarmManagerBroadcastReceiver;
 
-        public AndroidBackgroundUpdateService(ILocalStorageService localStorageService)
-            : base(localStorageService)
+        public AndroidBackgroundUpdateService(ILocalStorageService localStorageService, ILogger logger)
+            : base(localStorageService, logger)
         {
             this.alarmManagerBroadcastReceiver = new AlarmManagerBroadcastReceiver();
         }

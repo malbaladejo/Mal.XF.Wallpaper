@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -11,12 +12,14 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
     {
         private readonly ILocalStorageService localStorageService;
         private readonly IBackgroundUpdateService backgroundUpdateService;
+        private readonly ILogger logger;
         private bool isUpdateRequired;
 
-        public ConfigurationViewModel(ILocalStorageService localStorageService, IBackgroundUpdateService backgroundUpdateService)
+        public ConfigurationViewModel(ILocalStorageService localStorageService, IBackgroundUpdateService backgroundUpdateService, ILogger logger)
         {
             this.localStorageService = localStorageService;
             this.backgroundUpdateService = backgroundUpdateService;
+            this.logger = logger;
             var settings = localStorageService.GetSettings();
             this.WallpaperConfiguration = new ConfigurationItem(new WallpaperSettingsService(localStorageService, settings));
             this.ScreenLockConfiguration = new ConfigurationItem(new ScreenLockSettingsService(localStorageService, settings));
@@ -43,10 +46,12 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
+            this.logger.Info($"{nameof(ConfigurationViewModel)}.{nameof(INavigationAware.OnNavigatedFrom)}");
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
+            this.logger.Info($"{nameof(ConfigurationViewModel)}.{nameof(INavigationAware.OnNavigatedTo)}");
             this.WallpaperConfiguration.LoadSettings();
             this.ScreenLockConfiguration.LoadSettings();
 

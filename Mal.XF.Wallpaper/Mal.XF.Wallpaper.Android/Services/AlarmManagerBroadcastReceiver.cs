@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Mal.XF.Infra.Extensions;
 using Mal.XF.Wallpaper.Services;
 using System;
 
@@ -40,7 +41,8 @@ namespace Mal.XF.Wallpaper.Droid.Services
             this.alarmManager.Cancel(this.pendingIntent);
         }
 
-        private static long GetNext8AmTicks() => DateTime.Now.Date.AddDays(1).Date.AddHours(8).Ticks;
-        private static long GetNextHourTicks() => DateTime.Now.AddHours(1).Ticks;
+        private static long GetNext8AmTicks() => DateTime.Now.GetNextHour(8).Ticks;
+
+        private static long GetNextHourTicks() => DateTime.Now.GetNextHour().Ticks;
     }
 }
