@@ -46,12 +46,12 @@ namespace Mal.XF.Wallpaper.Pages.Configuration
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            this.logger.Info($"{nameof(ConfigurationViewModel)}.{nameof(INavigationAware.OnNavigatedFrom)}");
+            this.logger.Debug($"{nameof(ConfigurationViewModel)}.{nameof(INavigationAware.OnNavigatedFrom)}");
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            this.logger.Info($"{nameof(ConfigurationViewModel)}.{nameof(INavigationAware.OnNavigatedTo)}");
+            this.logger.Debug($"{nameof(ConfigurationViewModel)}.{nameof(INavigationAware.OnNavigatedTo)}");
             this.WallpaperConfiguration.LoadSettings();
             this.ScreenLockConfiguration.LoadSettings();
 

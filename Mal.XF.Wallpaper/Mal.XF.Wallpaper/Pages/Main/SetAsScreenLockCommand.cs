@@ -1,4 +1,5 @@
 ﻿using System;
+using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
 using Prism.Commands;
 
@@ -8,11 +9,13 @@ namespace Mal.XF.Wallpaper.Pages.Main
     {
         private readonly IWallpaperService bingWallpaperService;
         private readonly Action<bool, string> setIsBusy;
+        private readonly ILogger logger;
 
-        public SetAsScreenLockCommand(IWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
+        public SetAsScreenLockCommand(IWallpaperService bingWallpaperService, Action<bool, string> setIsBusy, ILogger logger)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.setIsBusy = setIsBusy;
+            this.logger = logger;
             this.IsActive = true;
         }
 
@@ -23,9 +26,11 @@ namespace Mal.XF.Wallpaper.Pages.Main
             try
             {
                 this.IsActive = false;
-                this.setIsBusy(true, "Set as screnn lock...");
+                this.setIsBusy(true, "Set as screen lock...");
                 this.RaiseCanExecuteChanged();
+                this.logger.Debug($"{nameof(SetAsScreenLockCommand)} begin");
                 await this.bingWallpaperService.SetImageAsScreenLockAsync(filePath);
+                this.logger.Debug($"{nameof(SetAsScreenLockCommand)} end");
             }
             finally
             {

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:infraConverters="clr-namespace:Mal.XF.Infra.Converters;assembly=Mal.XF.Infra"
+             xmlns:controls="clr-namespace:Mal.XF.Infra.Controls;assembly=Mal.XF.Infra"
+             xmlns:Fonts="clr-namespace:Mal.XF.Infra.Fonts;assembly=Mal.XF.Infra"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mal.XF.Wallpaper.Pages.Main.MainPage"
              Title="Malpaper">
@@ -33,18 +35,20 @@
             <StackLayout Grid.Row="1"
                          Orientation="Horizontal"
                          HorizontalOptions="Center">
-                <Button Text="W"
-                        WidthRequest="70"
-                        Command="{Binding SetAsWallpaperCommand}"
-                        CommandParameter="{Binding TodayImagePath}" />
-                <Button Text="L"
-                        WidthRequest="70"
-                        Command="{Binding SetAsScreenLockCommand}"
-                        CommandParameter="{Binding TodayImagePath}" />
-                <Button Text="W+L"
-                        WidthRequest="70"
-                        Command="{Binding SetAsWallpaperAndScreenLockCommand}"
-                        CommandParameter="{Binding TodayImagePath}" />
+                <controls:IconButton Text="{x:Static Fonts:IconFont.Image}"
+                                     WidthRequest="70"
+                                     Command="{Binding SetAsWallpaperCommand}"
+                                     CommandParameter="{Binding TodayImagePath}" />
+
+                <controls:IconButton Text="{x:Static Fonts:IconFont.Lock}"
+                                     WidthRequest="70"
+                                     Command="{Binding SetAsScreenLockCommand}"
+                                     CommandParameter="{Binding TodayImagePath}" />
+
+                <controls:IconButton Text="{Binding SetAsWallpaperAndScreenLockText}"
+                                     WidthRequest="70"
+                                     Command="{Binding SetAsWallpaperAndScreenLockCommand}"
+                                     CommandParameter="{Binding TodayImagePath}" />
             </StackLayout>
         </Grid>
 

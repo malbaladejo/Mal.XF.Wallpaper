@@ -6,6 +6,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Mal.XF.Infra.Fonts;
 using Mal.XF.Infra.Log;
 using Xamarin.Forms.Internals;
 
@@ -21,9 +22,9 @@ namespace Mal.XF.Wallpaper.Pages.Main
         {
             this.bingWallpaperService = bingWallpaperService;
             this.logger = logger;
-            this.setAsWallpaperCommand = new SetAsWallpaperCommand(wallpaperService, this.SetIsBusy);
-            this.setAsScreenLockCommand = new SetAsScreenLockCommand(wallpaperService, this.SetIsBusy);
-            this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(wallpaperService, this.SetIsBusy);
+            this.setAsWallpaperCommand = new SetAsWallpaperCommand(wallpaperService, this.SetIsBusy, logger);
+            this.setAsScreenLockCommand = new SetAsScreenLockCommand(wallpaperService, this.SetIsBusy, logger);
+            this.setAsWallpaperAndScreenLockCommand = new SetAsWallpaperAndScreenLockCommand(wallpaperService, this.SetIsBusy, logger);
 
             this.commands = new List<DelegateCommandBase>
             {
@@ -81,14 +82,16 @@ namespace Mal.XF.Wallpaper.Pages.Main
         private readonly DelegateCommandBase setAsWallpaperAndScreenLockCommand;
         public ICommand SetAsWallpaperAndScreenLockCommand => setAsWallpaperAndScreenLockCommand;
 
+        public string SetAsWallpaperAndScreenLockText { get; } = $"{IconFont.Image}+{IconFont.Lock}";
+
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            this.logger.Info($"{nameof(MainViewModel)}.{nameof(INavigationAware.OnNavigatedFrom)}");
+            this.logger.Debug($"{nameof(MainViewModel)}.{nameof(INavigationAware.OnNavigatedFrom)}");
         }
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            this.logger.Info($"{nameof(MainViewModel)}.{nameof(INavigationAware.OnNavigatedTo)}");
+            this.logger.Debug($"{nameof(MainViewModel)}.{nameof(INavigationAware.OnNavigatedTo)}");
             this.Load();
         }
 

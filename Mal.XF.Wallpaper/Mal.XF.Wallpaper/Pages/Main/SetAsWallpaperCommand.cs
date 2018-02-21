@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
 using Prism.Commands;
 
@@ -10,11 +11,13 @@ namespace Mal.XF.Wallpaper.Pages.Main
     {
         private readonly IWallpaperService bingWallpaperService;
         private readonly Action<bool, string> setIsBusy;
+        private readonly ILogger logger;
 
-        public SetAsWallpaperCommand(IWallpaperService bingWallpaperService, Action<bool, string> setIsBusy)
+        public SetAsWallpaperCommand(IWallpaperService bingWallpaperService, Action<bool, string> setIsBusy, ILogger logger)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.setIsBusy = setIsBusy;
+            this.logger = logger;
             this.IsActive = true;
         }
 
@@ -27,7 +30,9 @@ namespace Mal.XF.Wallpaper.Pages.Main
                 this.IsActive = false;
                 this.setIsBusy(true, "Set as wallpaper...");
                 this.RaiseCanExecuteChanged();
+                this.logger.Debug($"{nameof(SetAsWallpaperCommand)} begin");
                 await this.bingWallpaperService.SetImageAsWallpaperAsync(filePath);
+                this.logger.Debug($"{nameof(SetAsWallpaperCommand)} end");
             }
             finally
             {
