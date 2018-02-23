@@ -21,7 +21,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
                                                new AndroidWallpaperService()));
         }
 
-        public static IBackgroundUpdateService CreateIBackgroundUpdateService()
+        public static IBackgroundUpdateService CreateBackgroundUpdateService()
         {
             return backgroundUpdateService ?? (backgroundUpdateService = new AndroidBackgroundUpdateService(CreateLocalStorageService(), CreateLogger()));
         }
@@ -36,7 +36,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
             return localStorageService ?? (localStorageService = new LocalStorageService());
         }
 
-        private static ILogger CreateLogger()
+        public static ILogger CreateLogger()
         {
             return logger ?? (logger = new Logger(new LogManager()));
         }

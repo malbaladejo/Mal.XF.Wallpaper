@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Models;
 
@@ -18,29 +20,32 @@ namespace Mal.XF.Wallpaper.Services
 
         public void StartNext8Am()
         {
-            this.logger.Info(nameof(StartNext8Am));
+            var nextHour = DateTime.Now.GetNextHour(8);
+            this.logger.Info($"{nameof(StartNext8Am)}: {nextHour}");
             this.Stop();
-            this.StartServiceNext8Am();
+            this.StartService(nextHour);
         }
 
         public void StartNextHour()
         {
-            this.logger.Info(nameof(StartNext8Am));
+            var nextHour = DateTime.Now.GetNextHour();
+            this.logger.Info($"{nameof(StartNextHour)}: {nextHour}");
             this.Stop();
-            this.StartServiceNextHour();
+            this.StartService(nextHour);
         }
 
-        protected abstract void StartServiceNext8Am();
-        protected abstract void StartServiceNextHour();
+        protected abstract void StartService(DateTime dateTime);
 
         public abstract void Stop();
 
         public void StartIfNeeded()
         {
+            this.logger.Debug($"{nameof(BackgroundUpdateServiceBase)}.{nameof(this.StartIfNeeded)}");
+
             var settings = this.localStorageService.GetSettings();
             if (!settings.IsUpdateRequired)
                 return;
-
+            this.logger.Debug($"{nameof(BackgroundUpdateServiceBase)}.{nameof(this.StartIfNeeded)}: {nameof(settings.IsUpdateRequired)}: {settings.IsUpdateRequired}");
             this.StartNext8Am();
         }
     }

@@ -1,6 +1,8 @@
-﻿using Mal.XF.Infra;
+﻿using System;
+using Mal.XF.Infra;
 using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Localisation;
+using Mal.XF.Infra.Log;
 using Mal.XF.Infra.Pages.Master;
 using Mal.XF.Infra.Pages.MasterMenu;
 using Mal.XF.Wallpaper.Pages.Configuration;
@@ -10,12 +12,15 @@ using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Xamarin.Forms;
 using Mal.XF.Infra.Navigation;
+using Mal.XF.Wallpaper.Droid.Services;
 
 namespace Mal.XF.Wallpaper
 {
-    public partial class App : MasterDetailApplicationBase
+    public partial class App 
     {
         public NavigationPage NavigationPage { get; private set; }
+        private ILogger logger;
+        private IBackgroundUpdateService backgroundUpdateService;
 
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
@@ -25,6 +30,18 @@ namespace Mal.XF.Wallpaper
         {
             this.InitializeComponent();
             base.OnInitialized();
+            this.logger = this.Container.Resolve<ILogger>();
+            this.backgroundUpdateService = this.Container.Resolve<IBackgroundUpdateService>();
+
+            try
+            {
+                this.logger.Info($"{nameof(App)}.{nameof(this.OnInitialized)}");
+                this.backgroundUpdateService.StartIfNeeded();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error($"{nameof(App)}.{nameof(this.OnInitialized)}", e);
+            }
         }
 
         protected override void RegisterTypes()

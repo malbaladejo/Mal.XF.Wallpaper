@@ -1,6 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
-using Mal.XF.Infra.Extensions;
+using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
 using System;
 
@@ -12,6 +12,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
         private readonly AlarmManager alarmManager;
         private readonly PendingIntent pendingIntent;
         private readonly IWallpaperBackgroundService backgroundUpdateService;
+        private readonly ILogger logger;
 
         public AlarmManagerBroadcastReceiver()
         {
@@ -19,30 +20,46 @@ namespace Mal.XF.Wallpaper.Droid.Services
             this.alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
             this.pendingIntent = PendingIntent.GetBroadcast(Application.Context, 0, currentIntent, 0);
             this.backgroundUpdateService = AndroidBackgroundServiceFactory.CreateIBackgroundUpdateService2();
+            this.logger = AndroidBackgroundServiceFactory.CreateLogger();
         }
 
         public override void OnReceive(Context context, Intent intent)
         {
-            this.backgroundUpdateService.UpdateImagesAsync();
+            try
+            {
+                this.logger.Info($"{nameof(AlarmManagerBroadcastReceiver)}.{nameof(this.OnReceive)}");
+                this.backgroundUpdateService.UpdateImagesAsync();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error($"{nameof(AlarmManagerBroadcastReceiver)}.{nameof(this.OnReceive)}", e);
+            }
         }
 
-        public void SetAlarm(Context context)
+        public void SetAlarm(Context context, DateTime dateTime)
         {
-            this.alarmManager.SetExact(AlarmType.Rtc, GetNext8AmTicks(), this.pendingIntent);
-        }
-
-        public void SetAlarmNextHour(Context context)
-        {
-            this.alarmManager.SetExact(AlarmType.Rtc, GetNextHourTicks(), this.pendingIntent);
+            try
+            {
+                this.logger.Info($"{nameof(AlarmManagerBroadcastReceiver)}.{nameof(this.SetAlarm)}");
+                this.alarmManager.SetExact(AlarmType.Rtc, dateTime.Ticks, this.pendingIntent);
+            }
+            catch (Exception e)
+            {
+                this.logger.Error($"{nameof(AlarmManagerBroadcastReceiver)}.{nameof(this.SetAlarm)}", e);
+            }
         }
 
         public void CancelAlarm(Context context)
         {
-            this.alarmManager.Cancel(this.pendingIntent);
+            try
+            {
+                this.logger.Info($"{nameof(AlarmManagerBroadcastReceiver)}.{nameof(this.CancelAlarm)}");
+                this.alarmManager.Cancel(this.pendingIntent);
+            }
+            catch (Exception e)
+            {
+                this.logger.Error($"{nameof(AlarmManagerBroadcastReceiver)}.{nameof(this.CancelAlarm)}", e);
+            }
         }
-
-        private static long GetNext8AmTicks() => DateTime.Now.GetNextHour(8).Ticks;
-
-        private static long GetNextHourTicks() => DateTime.Now.GetNextHour().Ticks;
     }
 }

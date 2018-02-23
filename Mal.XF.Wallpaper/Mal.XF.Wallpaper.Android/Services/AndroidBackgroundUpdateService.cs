@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
+using System;
 
 namespace Mal.XF.Wallpaper.Droid.Services
 {
@@ -14,9 +15,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
             this.alarmManagerBroadcastReceiver = new AlarmManagerBroadcastReceiver();
         }
 
-        protected override void StartServiceNext8Am() => this.alarmManagerBroadcastReceiver.SetAlarm(Application.Context);
-
-        protected override void StartServiceNextHour() => this.alarmManagerBroadcastReceiver.SetAlarmNextHour(Application.Context);
+        protected override void StartService(DateTime dateTime) => this.alarmManagerBroadcastReceiver.SetAlarm(Application.Context, dateTime);
 
         public override void Stop() => this.alarmManagerBroadcastReceiver.CancelAlarm(Application.Context);
     }
