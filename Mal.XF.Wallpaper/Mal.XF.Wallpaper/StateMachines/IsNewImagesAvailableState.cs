@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
+using System;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
@@ -13,18 +11,34 @@ namespace Mal.XF.Wallpaper.StateMachines
     {
         private readonly IBingWallpaperService bingWallpaperService;
         private readonly ILocalStorageService localStorageService;
+        private readonly ILogger logger;
 
-        public IsNewImagesAvailableState(IBingWallpaperService bingWallpaperService, ILocalStorageService localStorageService)
+        public IsNewImagesAvailableState(IBingWallpaperService bingWallpaperService, 
+                                         ILocalStorageService localStorageService,
+                                         ILogger logger)
         {
             this.bingWallpaperService = bingWallpaperService;
             this.localStorageService = localStorageService;
+            this.logger = logger;
         }
 
         public override bool IsValid()
         {
-            var bingImages = this.bingWallpaperService.GetImagesAsync().Result;
-            var metada = localStorageService.GetMetadata();
-            return bingImages[0] == metada.Images[0];
+            try
+            {
+                var bingImages = this.bingWallpaperService.GetImagesAsync().Result;
+                var metada = localStorageService.GetMetadata();
+
+                var isValid = bingImages[0] != metada.Images[0];
+                this.logger.Debug($"Has new images available:{isValid}");
+
+                return isValid;
+            }
+            catch(Exception e)
+            {
+                this.logger.Error(e.Message, e);
+                throw;
+            }
         }
 
         public override void Execute()

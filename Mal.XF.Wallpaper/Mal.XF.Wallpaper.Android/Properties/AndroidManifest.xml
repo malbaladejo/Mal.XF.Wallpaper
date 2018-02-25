@@ -6,4 +6,5 @@
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<application android:label="Malpaper" android:icon="@drawable/Icon"></application>
+  <receiver android:name="Mal.XF.Wallpaper.Droid.Services.BootCompletedBroadcastReceiver" />
 </manifest>

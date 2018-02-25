@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Mal.XF.Infra.Log;
 using Mal.XF.Infra.Net;
 using Mal.XF.Wallpaper.Services;
 
@@ -13,31 +11,54 @@ namespace Mal.XF.Wallpaper.StateMachines
         private readonly IWallpaperBackgroundService wallpaperBackgroundService;
         private readonly IBingWallpaperService bingWallpaperService;
         private readonly IBackgroundUpdateService backgroundUpdateService;
+        private readonly ILogger logger;
 
         public StateFactory(ILocalStorageService localStorageService, 
                             INetworkService networkService, 
                             IWallpaperBackgroundService wallpaperBackgroundService,
                             IBingWallpaperRepository bingWallpaperService,
-                            IBackgroundUpdateService backgroundUpdateService)
+                            IBackgroundUpdateService backgroundUpdateService,
+                            ILogger logger)
         {
             this.localStorageService = localStorageService;
             this.networkService = networkService;
             this.wallpaperBackgroundService = wallpaperBackgroundService;
             this.bingWallpaperService = bingWallpaperService;
             this.backgroundUpdateService = backgroundUpdateService;
+            this.logger = logger;
         }
-        public IState GetInitialState()
+
+        public IState GetInitialStateForBootCompletedBroadcastReceiver()
         {
             var initialState = new DefaultState();
-            var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService);
-            var isWifiEnabledState = new IsWifiEnabledState(this.networkService);
-            var isWifiRequiredState = new IsWifiRequiredState(this.localStorageService);
-            var isUpdateRequiredBaseOnLastUpdateState = new IsUpdateRequiredBaseOnLastUpdateState(this.localStorageService);
-            var updateImagesState = new UpdateImagesState(this.wallpaperBackgroundService);
-            var setLastUpdateState = new SetLastUpdateState(this.localStorageService);
-            var isNewImagesAvailableState = new IsNewImagesAvailableState(this.bingWallpaperService, this.localStorageService);
-            var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService);
-            var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService);
+            var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService, this.logger);
+            var isCurrentHourBefore8AmState = new IsCurrentHourBefore8AmState(this.logger);
+            var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService, this.logger);
+            var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService, this.logger);
+
+            initialState.AddState(isUpdateRequiredBaseOnSettingsState);
+
+            isUpdateRequiredBaseOnSettingsState.AddState(isCurrentHourBefore8AmState);
+            isUpdateRequiredBaseOnSettingsState.AddState(scheduleBackgroundUpdateServiceToNextHourState);
+
+            isCurrentHourBefore8AmState.AddState(scheduleBackgroundUpdateServiceTo8AmState);
+
+            return initialState;
+        }
+
+        public IState GetInitialStateForAlarmManagerBroadcastReceiver()
+        {
+            var initialState = new DefaultState();
+            var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService, this.logger);
+            var isWifiEnabledState = new IsWifiEnabledState(this.networkService, this.logger);
+            var isWifiRequiredState = new IsWifiRequiredState(this.localStorageService, this.logger);
+            var isUpdateRequiredBaseOnLastUpdateState = new IsUpdateRequiredBaseOnLastUpdateState(this.localStorageService, this.logger);
+            var updateImagesState = new UpdateImagesState(this.wallpaperBackgroundService, this.logger);
+            var setLastUpdateState = new SetLastUpdateState(this.localStorageService, this.logger);
+            var isNewImagesAvailableState = new IsNewImagesAvailableState(this.bingWallpaperService, this.localStorageService, this.logger);
+            var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService, this.logger);
+            var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService, this.logger);
+
 
             initialState.AddState(isUpdateRequiredBaseOnSettingsState);
 

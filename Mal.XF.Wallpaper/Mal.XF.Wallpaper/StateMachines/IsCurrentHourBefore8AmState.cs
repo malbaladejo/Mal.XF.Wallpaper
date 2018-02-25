@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Mal.XF.Infra.Net;
 using Mal.XF.Infra.Log;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
     /// <summary>
-    /// Etat qui vérifie si le Wifi est disponible.
+    /// Etat qui vérifie si l'heure courante est avant 8 du matin.
     /// </summary>
-    internal class IsWifiEnabledState : StateBase
+    internal class IsCurrentHourBefore8AmState : StateBase
     {
-        private readonly INetworkService networkService;
         private readonly ILogger logger;
 
-        public IsWifiEnabledState(INetworkService networkService, ILogger logger)
+        public IsCurrentHourBefore8AmState(ILogger logger)
         {
-            this.networkService = networkService;
             this.logger = logger;
         }
 
@@ -25,8 +19,8 @@ namespace Mal.XF.Wallpaper.StateMachines
         {
             try
             {
-                var isValid = networkService.IsWifiEnabled();
-                this.logger.Debug($"Is Wifi Enabled: {isValid}");
+                var isValid = DateTime.Now.Hour < 8;
+                this.logger.Debug($"Before 8Am : {isValid}");
 
                 return isValid;
             }

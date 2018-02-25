@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalStorageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\WallpaperBackgroundService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StateMachines\DefaultState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsCurrentHourBefore8AmState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StateMachines\IsNewImagesAvailableState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StateMachines\ScheduleBackgroundUpdateServiceTo8AmState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StateMachines\ScheduleBackgroundUpdateServiceToNextHourState.cs" />

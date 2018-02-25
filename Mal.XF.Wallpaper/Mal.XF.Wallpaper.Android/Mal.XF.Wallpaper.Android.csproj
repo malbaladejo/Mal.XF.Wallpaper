@@ -153,7 +153,7 @@
     <Compile Include="Services\AndroidBackgroundUpdateService.cs" />
     <Compile Include="Services\AndroidDownloadService.cs" />
     <Compile Include="Services\AndroidWallpaperService.cs" />
-    <Compile Include="Services\BackgroundUpdateServiceBootReceiver.cs" />
+    <Compile Include="Services\BootCompletedBroadcastReceiver.cs" />
     <Compile Include="Services\AndroidBackgroundServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Mal.XF.Wallpaper.Services;
+using Mal.XF.Infra.Log;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
@@ -12,13 +13,29 @@ namespace Mal.XF.Wallpaper.StateMachines
     internal class IsWifiRequiredState : StateBase
     {
         private readonly ILocalStorageService localStorageService;
+        private readonly ILogger logger;
 
-        public IsWifiRequiredState(ILocalStorageService localStorageService)
+        public IsWifiRequiredState(ILocalStorageService localStorageService, ILogger logger)
         {
             this.localStorageService = localStorageService;
+            this.logger = logger;
         }
 
-        public override bool IsValid() => this.localStorageService.GetSettings().IsWifiRequired;
+        public override bool IsValid()
+        {
+            try
+            {
+                var isValid = this.localStorageService.GetSettings().IsWifiRequired;
+                this.logger.Debug($"Is Wifi Required: {isValid}");
+
+                return isValid;
+            }
+            catch (Exception e)
+            {
+                this.logger.Error(e.Message, e);
+                throw;
+            }
+        }
 
         public override void Execute()
         {
