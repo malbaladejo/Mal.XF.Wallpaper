@@ -7,16 +7,16 @@ namespace Mal.XF.Wallpaper.Droid.Services
 {
     internal class AndroidBackgroundUpdateService : BackgroundUpdateServiceBase
     {
-        private readonly AlarmManagerBroadcastReceiver alarmManagerBroadcastReceiver;
+        private readonly AlarmManagerFacade alarmManagerFacade;
 
-        public AndroidBackgroundUpdateService(ILocalStorageService localStorageService, ILogger logger)
-            : base(localStorageService, logger)
+        public AndroidBackgroundUpdateService(ILogger logger)
+            : base(logger)
         {
-            this.alarmManagerBroadcastReceiver = new AlarmManagerBroadcastReceiver();
+            this.alarmManagerFacade = new AlarmManagerFacade(logger);
         }
 
-        protected override void StartService(DateTime dateTime) => this.alarmManagerBroadcastReceiver.SetAlarm(Application.Context, dateTime);
+        protected override void StartService(DateTime dateTime) => this.alarmManagerFacade.SetAlarm(Application.Context, dateTime);
 
-        public override void Stop() => this.alarmManagerBroadcastReceiver.CancelAlarm(Application.Context);
+        public override void Stop() => this.alarmManagerFacade.CancelAlarm(Application.Context);
     }
 }

@@ -26,7 +26,7 @@ namespace Mal.XF.Wallpaper.StateMachines
         public override void Execute() {
             try
             {
-                this.logger.Debug($"Schedule alarm at next hour");
+                this.logger.Debug($"Schedule alarm at next hour.");
                 this.backgroundUpdateService.StartNextHour();
             }
             catch (Exception e)

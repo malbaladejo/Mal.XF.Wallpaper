@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Mal.XF.Infra.Extensions;
+﻿using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Log;
-using Mal.XF.Wallpaper.Models;
+using System;
 
 namespace Mal.XF.Wallpaper.Services
 {
     internal abstract class BackgroundUpdateServiceBase : IBackgroundUpdateService
     {
-        private readonly ILocalStorageService localStorageService;
         private readonly ILogger logger;
 
-        public BackgroundUpdateServiceBase(ILocalStorageService localStorageService, ILogger logger)
+        protected BackgroundUpdateServiceBase(ILogger logger)
         {
-            this.localStorageService = localStorageService;
             this.logger = logger;
         }
 
@@ -28,7 +23,7 @@ namespace Mal.XF.Wallpaper.Services
 
         public void StartNextHour()
         {
-            var nextHour = DateTime.Now.GetNextHour();
+            var nextHour = DateTime.Now.GetCurrentDatePlusOneHour();
             this.logger.Info($"{nameof(StartNextHour)}: {nextHour}");
             this.Stop();
             this.StartService(nextHour);
@@ -37,16 +32,5 @@ namespace Mal.XF.Wallpaper.Services
         protected abstract void StartService(DateTime dateTime);
 
         public abstract void Stop();
-
-        public void StartIfNeeded()
-        {
-            this.logger.Debug($"{nameof(BackgroundUpdateServiceBase)}.{nameof(this.StartIfNeeded)}");
-
-            var settings = this.localStorageService.GetSettings();
-            if (!settings.IsUpdateRequired)
-                return;
-            this.logger.Debug($"{nameof(BackgroundUpdateServiceBase)}.{nameof(this.StartIfNeeded)}: {nameof(settings.IsUpdateRequired)}: {settings.IsUpdateRequired}");
-            this.StartNext8Am();
-        }
     }
 }

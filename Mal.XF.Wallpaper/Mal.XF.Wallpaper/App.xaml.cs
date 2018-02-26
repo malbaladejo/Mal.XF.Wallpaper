@@ -1,26 +1,19 @@
-﻿using System;
-using Mal.XF.Infra;
-using Mal.XF.Infra.Extensions;
+﻿using Mal.XF.Infra.Extensions;
 using Mal.XF.Infra.Localisation;
 using Mal.XF.Infra.Log;
-using Mal.XF.Infra.Pages.Master;
-using Mal.XF.Infra.Pages.MasterMenu;
 using Mal.XF.Wallpaper.Pages.Configuration;
 using Mal.XF.Wallpaper.Pages.Main;
 using Mal.XF.Wallpaper.Services;
+using Mal.XF.Wallpaper.StateMachines;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
-using Xamarin.Forms;
-using Mal.XF.Infra.Navigation;
-using Mal.XF.Wallpaper.Droid.Services;
+using System;
 
 namespace Mal.XF.Wallpaper
 {
     public partial class App 
     {
-        public NavigationPage NavigationPage { get; private set; }
         private ILogger logger;
-        private IBackgroundUpdateService backgroundUpdateService;
 
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
@@ -31,12 +24,18 @@ namespace Mal.XF.Wallpaper
             this.InitializeComponent();
             base.OnInitialized();
             this.logger = this.Container.Resolve<ILogger>();
-            this.backgroundUpdateService = this.Container.Resolve<IBackgroundUpdateService>();
 
+            this.StartBackgroundServiceIfNeeded();
+        }
+
+        private void StartBackgroundServiceIfNeeded()
+        {
             try
             {
-                this.logger.Info($"{nameof(App)}.{nameof(this.OnInitialized)}");
-                this.backgroundUpdateService.StartIfNeeded();
+                this.logger.Info($"{nameof(App)}.{nameof(this.StartBackgroundServiceIfNeeded)}");
+                var stateFactory = this.Container.Resolve<StateFactory>();
+                var stateMachine = new StateMachine(stateFactory.GetInitialStateForDeviceBoot(), this.logger);
+                stateMachine.Execute();
             }
             catch (Exception e)
             {

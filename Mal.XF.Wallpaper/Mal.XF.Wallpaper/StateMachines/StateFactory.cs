@@ -28,7 +28,10 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.logger = logger;
         }
 
-        public IState GetInitialStateForBootCompletedBroadcastReceiver()
+        /// <summary>
+        /// Donne l'état initial de la machine état à exécuter lors du démarrage du device.
+        /// </summary>
+        public IState GetInitialStateForDeviceBoot()
         {
             var initialState = new DefaultState();
             var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService, this.logger);
@@ -46,7 +49,10 @@ namespace Mal.XF.Wallpaper.StateMachines
             return initialState;
         }
 
-        public IState GetInitialStateForAlarmManagerBroadcastReceiver()
+        /// <summary>
+        /// Donne l'état initial de la machine état à exécuter lorsque le démon se lance.
+        /// </summary>
+        public IState GetInitialStateForDeamon()
         {
             var initialState = new DefaultState();
             var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService, this.logger);
@@ -58,7 +64,6 @@ namespace Mal.XF.Wallpaper.StateMachines
             var isNewImagesAvailableState = new IsNewImagesAvailableState(this.bingWallpaperService, this.localStorageService, this.logger);
             var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService, this.logger);
             var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService, this.logger);
-
 
             initialState.AddState(isUpdateRequiredBaseOnSettingsState);
 

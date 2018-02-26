@@ -35,13 +35,12 @@ namespace Mal.XF.Wallpaper.Droid.Services
                 CreateWallpaperBackgroundUpdateService(),
                 CreateBingWallpaperRepository(),
                 CreateBackgroundUpdateService(),
-                CreateLogger()
-                );
+                CreateLogger());
         }
 
         public static IBackgroundUpdateService CreateBackgroundUpdateService()
         {
-            return backgroundUpdateService ?? (backgroundUpdateService = new AndroidBackgroundUpdateService(CreateLocalStorageService(), CreateLogger()));
+            return backgroundUpdateService ?? (backgroundUpdateService = new AndroidBackgroundUpdateService(CreateLogger()));
         }
 
         private static IFileService CreateFileService()
@@ -56,7 +55,11 @@ namespace Mal.XF.Wallpaper.Droid.Services
 
         public static ILogger CreateLogger()
         {
-            return logger ?? (logger = new Logger(new LogManager()));
+#if DEBUG
+            return logger ?? (logger = new Logger(new LogManager(), LogSeverity.Debug));
+#else
+            return logger ?? (logger = new Logger(new LogManager(), LogSeverity.Error));
+#endif
         }
 
         public static INetworkService CreateNetworkService()

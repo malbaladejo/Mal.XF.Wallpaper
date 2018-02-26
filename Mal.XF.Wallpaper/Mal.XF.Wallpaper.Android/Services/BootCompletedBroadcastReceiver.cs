@@ -12,8 +12,8 @@ namespace Mal.XF.Wallpaper.Droid.Services
 
         public BootCompletedBroadcastReceiver()
         {
-            this.stateFactory = AndroidBackgroundServiceFactory.CreateStateFactory();
             this.logger = AndroidBackgroundServiceFactory.CreateLogger();
+            this.stateFactory = AndroidBackgroundServiceFactory.CreateStateFactory();
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -24,7 +24,7 @@ namespace Mal.XF.Wallpaper.Droid.Services
             try
             {
                 this.logger.Info($"{nameof(BootCompletedBroadcastReceiver)}.{nameof(this.OnReceive)}");
-                var stateMachine = new StateMachine(this.stateFactory.GetInitialStateForBootCompletedBroadcastReceiver(), this.logger);
+                var stateMachine = new StateMachine(this.stateFactory.GetInitialStateForDeviceBoot(), this.logger);
                 stateMachine.Execute();
             }
             catch (Exception e)

@@ -10,6 +10,5 @@ namespace Mal.XF.Wallpaper.Services
         void StartNext8Am();
         void StartNextHour();
         void Stop();
-        void StartIfNeeded();
     }
 }
