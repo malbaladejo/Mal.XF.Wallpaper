@@ -14,8 +14,8 @@ namespace Mal.XF.Wallpaper.Droid.Services
         public AlarmManagerFacade(ILogger logger)
         {
             this.logger = logger;
-            var currentIntent = new Intent(Application.Context, typeof(AlarmManagerBroadcastReceiver));
             this.alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
+            var currentIntent = new Intent(Application.Context, typeof(AlarmManagerBroadcastReceiver));
             this.pendingIntent = PendingIntent.GetBroadcast(Application.Context, 0, currentIntent, 0);
         }
 

@@ -5,16 +5,15 @@ using System;
 
 namespace Mal.XF.Wallpaper.Droid.Services
 {
-    [BroadcastReceiver]
-    internal class AlarmManagerBroadcastReceiver : BroadcastReceiver
+    [BroadcastReceiver(Name = "wallpaper.alarmmanagerbroadcastreceiver")]
+    public class AlarmManagerBroadcastReceiver : BroadcastReceiver
     {
         private readonly ILogger logger;
-        private readonly StateFactory stateFactory;
 
         public AlarmManagerBroadcastReceiver()
         {
             this.logger = AndroidBackgroundServiceFactory.CreateLogger();
-            this.stateFactory = AndroidBackgroundServiceFactory.CreateStateFactory();
+            this.logger.Info($"{nameof(AndroidBackgroundServiceFactory)}.ctor");
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -22,7 +21,8 @@ namespace Mal.XF.Wallpaper.Droid.Services
             try
             {
                 this.logger.Info($"{nameof(BootCompletedBroadcastReceiver)}.{nameof(this.OnReceive)}");
-                var stateMachine = new StateMachine(this.stateFactory.GetInitialStateForDeamon(), this.logger);
+                var stateFactory = AndroidBackgroundServiceFactory.CreateStateFactory();
+                var stateMachine = new StateMachine(stateFactory.GetInitialStateForDeamon(), this.logger);
                 stateMachine.Execute();
             }
             catch (Exception e)
