@@ -13,8 +13,8 @@ namespace Mal.XF.Wallpaper.StateMachines
         private readonly IBackgroundUpdateService backgroundUpdateService;
         private readonly ILogger logger;
 
-        public StateFactory(ILocalStorageService localStorageService, 
-                            INetworkService networkService, 
+        public StateFactory(ILocalStorageService localStorageService,
+                            INetworkService networkService,
                             IWallpaperBackgroundService wallpaperBackgroundService,
                             IBingWallpaperRepository bingWallpaperService,
                             IBackgroundUpdateService backgroundUpdateService,
@@ -33,20 +33,15 @@ namespace Mal.XF.Wallpaper.StateMachines
         /// </summary>
         public IState GetInitialStateForDeviceBoot()
         {
-            var initialState = new DefaultState();
+            var deadEndState = new DeadEndState(this.logger);
             var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService, this.logger);
             var isCurrentHourBefore8AmState = new IsCurrentHourBefore8AmState(this.logger);
             var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService, this.logger);
             var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService, this.logger);
 
-            initialState.AddState(isUpdateRequiredBaseOnSettingsState);
-
-            isUpdateRequiredBaseOnSettingsState.AddState(isCurrentHourBefore8AmState);
-            isUpdateRequiredBaseOnSettingsState.AddState(scheduleBackgroundUpdateServiceToNextHourState);
-
-            isCurrentHourBefore8AmState.AddState(scheduleBackgroundUpdateServiceTo8AmState);
-
-            return initialState;
+            isUpdateRequiredBaseOnSettingsState.AddNextStates(isCurrentHourBefore8AmState, deadEndState);
+            isCurrentHourBefore8AmState.AddNextStates(scheduleBackgroundUpdateServiceTo8AmState, scheduleBackgroundUpdateServiceToNextHourState);
+            return isUpdateRequiredBaseOnSettingsState;
         }
 
         /// <summary>
@@ -54,7 +49,7 @@ namespace Mal.XF.Wallpaper.StateMachines
         /// </summary>
         public IState GetInitialStateForDeamon()
         {
-            var initialState = new DefaultState();
+            var deadEndState = new DeadEndState(this.logger);
             var isUpdateRequiredBaseOnSettingsState = new IsUpdateRequiredBaseOnSettingsState(this.localStorageService, this.logger);
             var isWifiEnabledState = new IsWifiEnabledState(this.networkService, this.logger);
             var isWifiRequiredState = new IsWifiRequiredState(this.localStorageService, this.logger);
@@ -65,26 +60,25 @@ namespace Mal.XF.Wallpaper.StateMachines
             var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService, this.logger);
             var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService, this.logger);
 
-            initialState.AddState(isUpdateRequiredBaseOnSettingsState);
+            isUpdateRequiredBaseOnSettingsState.AddNextStates(isUpdateRequiredBaseOnLastUpdateState, deadEndState);
 
-            isUpdateRequiredBaseOnSettingsState.AddState(isUpdateRequiredBaseOnLastUpdateState);
+            isUpdateRequiredBaseOnLastUpdateState.AddNextStates(isWifiRequiredState, scheduleBackgroundUpdateServiceTo8AmState);
 
-            isUpdateRequiredBaseOnSettingsState.AddState(isWifiRequiredState);
-            isUpdateRequiredBaseOnSettingsState.AddState(isNewImagesAvailableState);
+            isWifiRequiredState.AddNextStates(isWifiEnabledState, isNewImagesAvailableState);
 
-            isWifiRequiredState.AddState(isWifiEnabledState);
-            isWifiRequiredState.AddState(scheduleBackgroundUpdateServiceToNextHourState);
+            isWifiEnabledState.AddNextStates(isNewImagesAvailableState, scheduleBackgroundUpdateServiceToNextHourState);
 
-            isWifiEnabledState.AddState(isNewImagesAvailableState);
-            isWifiEnabledState.AddState(scheduleBackgroundUpdateServiceToNextHourState);
+            isNewImagesAvailableState.AddNextStates(updateImagesState, scheduleBackgroundUpdateServiceToNextHourState);
 
-            isNewImagesAvailableState.AddState(updateImagesState);
+            updateImagesState.AddNextStates(setLastUpdateState, scheduleBackgroundUpdateServiceToNextHourState);
 
-            updateImagesState.AddState(setLastUpdateState);
+            setLastUpdateState.AddNextStates(scheduleBackgroundUpdateServiceTo8AmState, deadEndState);
 
-            setLastUpdateState.AddState(scheduleBackgroundUpdateServiceTo8AmState);
+            scheduleBackgroundUpdateServiceToNextHourState.AddNextStates(deadEndState, deadEndState);
 
-            return initialState;
+            scheduleBackgroundUpdateServiceTo8AmState.AddNextStates(deadEndState, deadEndState);
+
+            return isUpdateRequiredBaseOnSettingsState;
         }
     }
 }

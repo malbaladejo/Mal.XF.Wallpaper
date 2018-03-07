@@ -7,7 +7,7 @@ namespace Mal.XF.Wallpaper.StateMachines
     /// <summary>
     /// Etat qui vérifie si de nouvelles images sont disponibles.
     /// </summary>
-    internal class IsNewImagesAvailableState : StateBase
+    internal class IsNewImagesAvailableState : SwitchStateBase
     {
         private readonly IBingWallpaperService bingWallpaperService;
         private readonly ILocalStorageService localStorageService;
@@ -22,7 +22,7 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.logger = logger;
         }
 
-        public override bool IsValid()
+        protected override bool IsValid()
         {
             try
             {
@@ -39,11 +39,6 @@ namespace Mal.XF.Wallpaper.StateMachines
                 this.logger.Error(e.Message, e);
                 throw;
             }
-        }
-
-        public override void Execute()
-        {
-            // Nothing to do
         }
     }
 }

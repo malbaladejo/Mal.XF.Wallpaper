@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
-using Mal.XF.Infra.Log;
+using System;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
-    internal class ScheduleBackgroundUpdateServiceTo8AmState : StateBase
+    internal class ScheduleBackgroundUpdateServiceTo8AmState : ActionStateBase
     {
         private readonly IBackgroundUpdateService backgroundUpdateService;
         private readonly ILogger logger;
@@ -16,7 +14,6 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.backgroundUpdateService = backgroundUpdateService;
             this.logger = logger;
         }
-        public override bool IsValid() => true;
 
         public override void Execute()
         {

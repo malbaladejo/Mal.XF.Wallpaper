@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
-using Mal.XF.Infra.Log;
+using System;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
     /// <summary>
     /// Etat qui vérifie si la configuration indique que la mise à jour ne doit se faire que si le Wifi est disponible.
     /// </summary>
-    internal class IsWifiRequiredState : StateBase
+    internal class IsWifiRequiredState : SwitchStateBase
     {
         private readonly ILocalStorageService localStorageService;
         private readonly ILogger logger;
@@ -21,7 +18,7 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.logger = logger;
         }
 
-        public override bool IsValid()
+        protected override bool IsValid()
         {
             try
             {
@@ -35,11 +32,6 @@ namespace Mal.XF.Wallpaper.StateMachines
                 this.logger.Error(e.Message, e);
                 throw;
             }
-        }
-
-        public override void Execute()
-        {
-            // Nothing to do.
         }
     }
 }

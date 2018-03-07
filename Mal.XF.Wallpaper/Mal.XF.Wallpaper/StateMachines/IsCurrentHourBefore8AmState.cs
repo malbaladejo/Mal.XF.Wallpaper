@@ -6,7 +6,7 @@ namespace Mal.XF.Wallpaper.StateMachines
     /// <summary>
     /// Etat qui vérifie si l'heure courante est avant 8 du matin.
     /// </summary>
-    internal class IsCurrentHourBefore8AmState : StateBase
+    internal class IsCurrentHourBefore8AmState : SwitchStateBase
     {
         private readonly ILogger logger;
 
@@ -15,7 +15,7 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.logger = logger;
         }
 
-        public override bool IsValid()
+        protected override bool IsValid()
         {
             try
             {
@@ -29,11 +29,6 @@ namespace Mal.XF.Wallpaper.StateMachines
                 this.logger.Error(e.Message, e);
                 throw;
             }
-        }
-
-        public override void Execute()
-        {
-            // Nothing to do
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
-    internal class StateMachine
+    internal class StateMachine : IStateVisitor
     {
         private readonly IState initialState;
         private readonly ILogger logger;
@@ -18,24 +18,41 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.logger = logger;
         }
 
-        public void Execute() => this.ExecuteState(this.initialState);
+        public void Execute()
+        {
+            this.logger.Debug($"Start State manchine.");
+            this.initialState.Accept(this);
+            this.logger.Debug($"Stop State manchine.");
+        }
 
-        private void ExecuteState(IState state)
+        public void Visit(ISwitchState state)
         {
             try
             {
-                this.logger.Debug($"{state.GetType().Name} executing.");
-                state.Execute();
-                this.logger.Debug($"{state.GetType().Name} executed.");
-
-                var newState = state.NextStates.FirstOrDefault(s => s.IsValid());
-                if (newState != null)
-                    this.ExecuteState(newState);
+                this.logger.Debug($"Switch on {state.GetType().Name}.");
+                this.Visit((IState)state);
             }
             catch (Exception e)
             {
                 this.logger.Error($"Error in {state.GetType().Name}.", e);
             }
         }
+
+        public void Visit(IActionState state)
+        {
+            try
+            {
+                this.logger.Debug($"{state.GetType().Name} executing.");
+                state.Execute();
+                this.logger.Debug($"{state.GetType().Name} executed.");
+                this.Visit((IState)state);
+            }
+            catch (Exception e)
+            {
+                this.logger.Error($"Error in {state.GetType().Name}.", e);
+            }
+        }
+
+        private void Visit(IState state)=> state?.GetNextState()?.Accept(this);
     }
 }

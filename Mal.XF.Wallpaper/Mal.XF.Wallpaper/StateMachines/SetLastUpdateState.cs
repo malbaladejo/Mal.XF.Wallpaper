@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mal.XF.Infra.Log;
 using Mal.XF.Wallpaper.Services;
-using Mal.XF.Infra.Log;
+using System;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
     /// <summary>
     /// Etat met à jour la date de mise à jour des images.
     /// </summary>
-    internal class SetLastUpdateState : StateBase
+    internal class SetLastUpdateState : ActionStateBase
     {
         private readonly ILocalStorageService localStorageService;
         private readonly ILogger logger;
@@ -20,8 +17,6 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.localStorageService = localStorageService;
             this.logger = logger;
         }
-
-        public override bool IsValid() => true;
 
         public override void Execute()
         {

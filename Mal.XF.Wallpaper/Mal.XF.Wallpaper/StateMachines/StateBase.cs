@@ -5,21 +5,10 @@ using System.Threading.Tasks;
 
 namespace Mal.XF.Wallpaper.StateMachines
 {
-    internal abstract class StateBase : IState
-    {
-        private readonly List<IState> nextStates;
+    //internal abstract class StateBase : IState
+    //{
+    //    public abstract void Accept(IStateVisitor visitor);
 
-        protected StateBase()
-        {
-            this.nextStates = new List<IState>();
-        }
-
-        public abstract bool IsValid();
-
-        public abstract void Execute();
-
-        public void AddState(IState state) => this.nextStates.Add(state);
-
-        public IReadOnlyCollection<IState> NextStates => this.nextStates;
-    }
+    //    public abstract IState GetNextState();
+    //}
 }
