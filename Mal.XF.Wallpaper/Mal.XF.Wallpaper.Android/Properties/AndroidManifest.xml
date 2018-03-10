@@ -12,4 +12,7 @@
       <action android:name="android.intent.action.BOOT_COMPLETED"></action>
     </intent-filter>
   </receiver>
+  <receiver android:name="wallpaper.alarmmanagerbroadcastreceiver"
+            android:enabled="true">
+  </receiver>
 </manifest>
