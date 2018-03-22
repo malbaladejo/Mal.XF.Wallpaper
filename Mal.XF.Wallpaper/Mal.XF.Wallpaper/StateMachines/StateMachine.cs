@@ -53,6 +53,11 @@ namespace Mal.XF.Wallpaper.StateMachines
             }
         }
 
+        public void Visit(DeadEndState state)
+        {
+            this.logger.Debug("Dead end");
+        }
+
         private void Visit(IState state)=> state?.GetNextState()?.Accept(this);
     }
 }

@@ -18,7 +18,7 @@ namespace Mal.XF.Wallpaper.StateMachines
             this.logger = logger;
         }
 
-        public override void Execute()
+        protected override void DoAction()
         {
             try
             {                

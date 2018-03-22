@@ -38,22 +38,12 @@ namespace Mal.XF.Wallpaper.StateMachines
             var isCurrentHourBefore8AmState = new IsCurrentHourBefore8AmState(this.logger);
             var scheduleBackgroundUpdateServiceToNextHourState = new ScheduleBackgroundUpdateServiceToNextHourState(this.backgroundUpdateService, this.logger);
             var scheduleBackgroundUpdateServiceTo8AmState = new ScheduleBackgroundUpdateServiceTo8AmState(this.backgroundUpdateService, this.logger);
-<<<<<<< HEAD
+
 
             isUpdateRequiredBaseOnSettingsState.AddNextStates(isCurrentHourBefore8AmState, deadEndState);
             isCurrentHourBefore8AmState.AddNextStates(scheduleBackgroundUpdateServiceTo8AmState, scheduleBackgroundUpdateServiceToNextHourState);
+            scheduleBackgroundUpdateServiceToNextHourState.AddNextStates(deadEndState, deadEndState);
             return isUpdateRequiredBaseOnSettingsState;
-=======
-            var isUpdateAlreadyScheduleState = new IsUpdateAlreadyScheduleState();
-            initialState.AddState(isUpdateRequiredBaseOnSettingsState);
-
-            isUpdateRequiredBaseOnSettingsState.AddState(isCurrentHourBefore8AmState);
-            isUpdateRequiredBaseOnSettingsState.AddState(scheduleBackgroundUpdateServiceToNextHourState);
-
-            isCurrentHourBefore8AmState.AddState(scheduleBackgroundUpdateServiceTo8AmState);
-
-            return initialState;
->>>>>>> 4bac3a1... IsUpdateAlreadyScheduleState
         }
 
         /// <summary>

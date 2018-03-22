@@ -9,7 +9,7 @@ namespace Mal.XF.Wallpaper.StateMachines
 
         public void Accept(IStateVisitor visitor)
         {
-            throw new NotImplementedException();
+            visitor.Visit(this);
         }
 
         public IState GetNextState()
