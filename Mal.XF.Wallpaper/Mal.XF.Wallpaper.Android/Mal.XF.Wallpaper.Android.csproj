@@ -156,6 +156,7 @@
     <Compile Include="Services\AndroidWallpaperService.cs" />
     <Compile Include="Services\BootCompletedBroadcastReceiver.cs" />
     <Compile Include="Services\AndroidBackgroundServiceFactory.cs" />
+    <Compile Include="SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -200,6 +201,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\splash_screen.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\splash.png" />
   </ItemGroup>
   <Import Project="..\Mal.XF.Wallpaper\Mal.XF.Wallpaper.projitems" Label="Shared" Condition="Exists('..\Mal.XF.Wallpaper\Mal.XF.Wallpaper.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
